@@ -1,0 +1,47 @@
+from playwright.sync_api import Page
+from UI_PAGES.base_page import BasePage
+
+class HomePage(BasePage):
+    def __init__(self, page: Page):
+        super().__init__(page)
+        self.logo = page.locator("img[alt='Website for automation practice']")
+        self.cart_button = page.get_by_role("link", name="Cart")
+        self.products_link = page.locator("a[href='/products']")
+        self.login_signup_link = page.locator("a[href='/login']")
+        self.products_heading = page.locator("h2").filter(has_text="All Products")
+        self.header_container = page.locator("header")
+        self.delete_account_btn = page.get_by_role("link", name="Delete Account")
+
+
+    def open_home(self):
+        self.open()
+
+    def verify_logo_visible(self):
+        self.wait_for_visible(self.logo)
+
+    def get_page_title(self) -> str:
+        return self.get_title()
+
+    def is_cart_button_visible(self) -> bool:
+        return self.is_visible(self.cart_button)
+
+    def click_cart(self):
+        self.click(self.cart_button)
+
+    def click_products(self):
+        self.click(self.products_link)
+        self.page.wait_for_url("**/products", timeout=self.config.PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
+        self.wait_for_visible(self.products_heading)
+
+    def click_login_signup(self):
+        self.click(self.login_signup_link)
+
+    def verify_logged_in(self, username: str):
+        self.page.reload(wait_until="networkidle", timeout=self.config.PAGE_LOAD_TIMEOUT)
+        self.page.wait_for_load_state("domcontentloaded", timeout=self.config.PAGE_LOAD_TIMEOUT)
+        header_text = self.header_container.text_content()
+        assert "Logged in" in header_text, f"'Logged in' not found in header. Actual: {header_text}"
+        assert username in header_text, f"User '{username}' not found in header. Actual: {header_text}"
+
+    def click_delete_account(self):
+        self.click(self.delete_account_btn)
