@@ -19,18 +19,22 @@ def browser_context(browser: Browser):
 
 
 @pytest.fixture(scope="function")
-def home_page(browser_context):
+def page(browser_context):
     page = browser_context.new_page()
+    yield page
+    page.close()
+
+
+@pytest.fixture(scope="function")
+def home_page(page: Page):
     return HomePage(page)
 
 
 @pytest.fixture(scope="function")
-def register_page(browser_context):
-    page = browser_context.new_page()
+def register_page(page: Page):
     return RegisterPage(page)
 
 
 @pytest.fixture(scope="function")
-def account_deleted_page(browser_context):
-    page = browser_context.new_page()
+def account_deleted_page(page: Page):
     return AccountDeletedPage(page)
