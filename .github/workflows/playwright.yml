@@ -25,15 +25,14 @@ jobs:
       - name: Install Playwright Browsers
         run: playwright install --with-deps chromium
 
-      - name: Create dummy .env file
+      - name: Create .env from secrets
         run: |
           echo "BASE_URL=https://www.automationexercise.com" > .env
-          echo "TEST_USER_EMAIL=dummy@test.com" >> .env
-          echo "TEST_USER_PASSWORD=123456" >> .env
+          echo "TEST_USER_EMAIL=${{secrets.TEST_USER_EMAIL}}" >> .env
+          echo "TEST_USER_PASSWORD=${{secrets.TEST_USER_PASSWORD}}" >> .env
 
       - name: Run Pytest
-        run: pytest UI_TESTS/Register_User.py --alluredir=allure-results --clean-alluredir -v
-        continue-on-error: true
+        run: pytest UI_TESTS/ --alluredir=allure-results --clean-alluredir -v        continue-on-error: true
 
       - name: Load Allure history
         uses: actions/checkout@v4
