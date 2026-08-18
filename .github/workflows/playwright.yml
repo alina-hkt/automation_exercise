@@ -32,7 +32,8 @@ jobs:
           echo "TEST_USER_PASSWORD=${{secrets.TEST_USER_PASSWORD}}" >> .env
 
       - name: Run Pytest
-        run: pytest UI_TESTS/ --alluredir=allure-results --clean-alluredir -v        continue-on-error: true
+        run: pytest UI_TESTS/ --alluredir=allure-results --clean-alluredir -v
+        continue-on-error: true
 
       - name: Load Allure history
         uses: actions/checkout@v4
