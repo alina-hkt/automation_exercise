@@ -11,6 +11,8 @@ class LoginPage(BasePage):
         self.login_btn = page.get_by_role("button", name="Login")
         
         self.login_heading = page.locator("h2").filter(has_text="Login to your account")
+
+        self.error_message = page.locator("p").filter(has_text="Your email or password is incorrect!")
         
         self.header_container = page.locator("header")
         self.delete_account_btn = page.get_by_role("link", name="Delete Account")
@@ -27,10 +29,12 @@ class LoginPage(BasePage):
     def click_login(self):
         self.click(self.login_btn)
 
+    def verify_error_visible(self):
+        self.wait_for_visible(self.error_message)
+
     def verify_logged_in(self):
         self.page.reload(wait_until="networkidle",timeout=self.config.PAGE_LOAD_TIMEOUT)
         self.page.wait_for_load_state("domcontentloaded",timeout=self.config.PAGE_LOAD_TIMEOUT)
-        
         header_text = self.header_container.text_content()
         assert "Logged in as" in header_text, f"'Logged in as' not found in header. Actual: {header_text}"
 
