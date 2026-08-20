@@ -49,7 +49,7 @@ def test_Register_User(home_page, register_page, account_deleted_page):
         register_page.click_continue()
 
     with allure.step("Шаг 16: Проверить, что пользователь залогинен"):
-        home_page.verify_logged_in(user_name)
+        home_page.verify_logged_in()
 
     with allure.step("Шаг 17: Кликнуть 'Delete Account'"):
         home_page.click_delete_account()
