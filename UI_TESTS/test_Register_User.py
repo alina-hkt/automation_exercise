@@ -6,8 +6,7 @@ from config import Config
 @pytest.mark.smoke
 def test_Register_User(home_page, register_page, account_deleted_page):
     config = Config()
-    user_name = "ALINA"
-    
+    username = "ALINA"
     dynamic_email = f"alina_{int(time.time())}@test.com"
     
     with allure.step("Шаги 1-3: Открыть браузер, перейти на сайт, проверить главную"):
@@ -49,7 +48,7 @@ def test_Register_User(home_page, register_page, account_deleted_page):
         register_page.click_continue()
 
     with allure.step("Шаг 16: Проверить, что пользователь залогинен"):
-        home_page.verify_logged_in()
+        home_page.verify_logged_in(username)
 
     with allure.step("Шаг 17: Кликнуть 'Delete Account'"):
         home_page.click_delete_account()
