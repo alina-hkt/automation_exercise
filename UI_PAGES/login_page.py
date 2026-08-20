@@ -30,17 +30,12 @@ class LoginPage(BasePage):
     def verify_error_visible(self):
         self.wait_for_visible(self.error_message)
 
-        def verify_logged_in(self, expected_username: str = None):
+    def verify_logged_in(self, username: str):
         self.page.reload(wait_until="networkidle", timeout=self.config.PAGE_LOAD_TIMEOUT)
         self.page.wait_for_load_state("domcontentloaded", timeout=self.config.PAGE_LOAD_TIMEOUT)
         header_text = self.header_container.text_content()
-        
-        if expected_username:
-            assert f"Logged in as {expected_username}" in header_text, \
-                f"Expected 'Logged in as {expected_username}', got: {header_text}"
-        else:
-            assert "Logged in as" in header_text, \
-                f"'Logged in as' not found in header. Actual: {header_text}"
+        assert f"Logged in as {username}" in header_text, \
+            f"Expected 'Logged in as {username}', got: {header_text}"
         
     def click_logout(self):
         self.click(self.logout_btn)
