@@ -60,7 +60,7 @@ def test_Login_User_Correct(home_page, register_page, login_page, account_delete
         login_page.click_login()
 
     with allure.step("Шаг 7: Проверить успешную авторизацию"):
-        login_page.verify_logged_in()
+        login_page.verify_logged_in(username)
 
     with allure.step("Шаг 8: Удалить аккаунт (очистка после теста)"):
         login_page.click_delete_account()
