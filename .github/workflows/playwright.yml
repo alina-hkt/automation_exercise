@@ -49,8 +49,8 @@ jobs:
           path: gh-pages
 
       - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.8
         if: always()
+        uses: andrcuns/allure-report-action@v2.3.0
         with:
           allure_results: allure-results
           allure_history: allure-history
