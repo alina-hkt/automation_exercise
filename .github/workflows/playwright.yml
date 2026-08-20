@@ -54,11 +54,9 @@ jobs:
           wget -q https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.29.0/allure-commandline-2.29.0.zip
           unzip -q allure-commandline-2.29.0.zip -d /tmp/allure
           
-          /tmp/allure/allure-2.29.0/bin/allure generate allure-results -o allure-history/latest --clean
+          /tmp/allure/allure-2.29.0/bin/allure generate allure-results -o allure-history --clean
           
-          if [ -d "allure-history/history" ]; then
-            cp -r allure-history/history allure-history/latest/history
-          fi
+          touch allure-history/.nojekyll
           
       - name: Deploy report to Github Pages
         if: always()
