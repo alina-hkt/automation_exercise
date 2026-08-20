@@ -9,7 +9,7 @@ class RegisterPage(BasePage):
         self.email_input = page.locator("form").filter(has_text="Signup").get_by_placeholder("Email Address")
         self.signup_btn = page.get_by_role("button", name="Signup")
         self.new_user_signup_heading = page.locator("h2").filter(has_text="New User Signup!")
-
+        self.error_message = page.locator("p").filter(has_text="Email Address already exist!")
         
         self.mrs_radio = page.get_by_text("Mrs.")
         self.password_input = page.get_by_label("Password *")
@@ -40,6 +40,9 @@ class RegisterPage(BasePage):
 
     def click_signup(self):
         self.click(self.signup_btn)
+
+    def verify_error_visible(self):
+        self.wait_for_visible(self.error_message)
 
     def verify_new_user_signup_visible(self):
         self.wait_for_visible(self.new_user_signup_heading)
