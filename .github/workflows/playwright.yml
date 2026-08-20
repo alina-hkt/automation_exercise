@@ -50,7 +50,7 @@ jobs:
 
       - name: Generate Allure Report
         if: always()
-        uses: andrcuns/allure-report-action@v2.3.0
+        uses: simple-elf/allure-report-action@v1.8 
         with:
           allure_results: allure-results
           allure_history: allure-history
