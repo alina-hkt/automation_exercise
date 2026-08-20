@@ -20,7 +20,7 @@ def test_Register_User(home_page, register_page, account_deleted_page):
         register_page.verify_new_user_signup_visible()
 
     with allure.step("Шаг 6: Ввести имя и динамический email"):
-        register_page.fill_name(user_name)
+        register_page.fill_name(username)
         register_page.fill_email(dynamic_email)
 
     with allure.step("Шаг 7: Кликнуть 'Signup'"):
@@ -33,7 +33,7 @@ def test_Register_User(home_page, register_page, account_deleted_page):
         register_page.check_newsletter()
         
         register_page.fill_address_details(
-            first_name=user_name, last_name="TestUser", company="QA Corp",
+            first_name=username, last_name="TestUser", company="QA Corp",
             address1="123 Test St", address2="Apt 1", country="United States",
             state="California", city="Los Angeles", zipcode="90001", mobile="1234567890"
         )
