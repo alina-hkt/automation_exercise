@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","5826","test_Register_User[chromium]","UI_TESTS","2026-08-20","passed","2026-08-20","","test_Register_User","",""
+"","2143","test_login_user_with_incorrect_credentials[chromium]","UI_TESTS","2026-08-20","passed","2026-08-20","","test_Login_User_incorrect","",""
+"","10635","test_Login_User_Correct[chromium]","UI_TESTS","2026-08-20","passed","2026-08-20","","test_Login_User_correct","",""
+"","13411","test_Login_User_Correct[chromium]","UI_TESTS","2026-08-20","passed","2026-08-20","","test_Logout_User","",""
