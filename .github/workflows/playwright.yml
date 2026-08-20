@@ -34,7 +34,8 @@ jobs:
           echo "BASE_URL=https://www.automationexercise.com" > .env
           echo "TEST_USER_EMAIL=${{secrets.TEST_USER_EMAIL}}" >> .env
           echo "TEST_USER_PASSWORD=${{secrets.TEST_USER_PASSWORD}}" >> .env
-
+          echo "NAME=${{secrets.NAME}}" >> .env
+          
       - name: Run Pytest
         run: pytest UI_TESTS/ --alluredir=allure-results --clean-alluredir -v
         continue-on-error: true
