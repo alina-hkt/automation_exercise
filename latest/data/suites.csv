@@ -1,6 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Thu Aug 20 12:08:55 UTC 2026","Thu Aug 20 12:09:01 UTC 2026","5466","UI_TESTS","test_Register_User","","","","test_Register_User[chromium]",""
-"passed","Thu Aug 20 12:08:44 UTC 2026","Thu Aug 20 12:08:46 UTC 2026","1554","UI_TESTS","test_Login_User_incorrect","","","","test_login_user_with_incorrect_credentials[chromium]",""
-"passed","Thu Aug 20 12:08:54 UTC 2026","Thu Aug 20 12:08:55 UTC 2026","1588","UI_TESTS","test_Register_Existing_Email","","","","test_register_user_with_existing_email[chromium]",""
-"passed","Thu Aug 20 12:08:46 UTC 2026","Thu Aug 20 12:08:54 UTC 2026","7528","UI_TESTS","test_Logout_User","","","","test_Login_User_Correct[chromium]",""
-"passed","Thu Aug 20 12:08:36 UTC 2026","Thu Aug 20 12:08:44 UTC 2026","8389","UI_TESTS","test_Login_User_correct","","","","test_Login_User_Correct[chromium]",""
