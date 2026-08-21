@@ -19,6 +19,9 @@ class HomePage(BasePage):
     def verify_logo_visible(self):
         self.wait_for_visible(self.logo)
 
+    def click_contact_us(self):
+        self.click(self.page.get_by_role("link", name="Contact Us"))
+
     def get_page_title(self) -> str:
         return self.get_title()
 

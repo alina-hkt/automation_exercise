@@ -4,6 +4,7 @@ from UI_PAGES.home_page import HomePage
 from UI_PAGES.register_page import RegisterPage
 from UI_PAGES.account_deleted_page import AccountDeletedPage
 from UI_PAGES.login_page import LoginPage
+from UI_PAGES.contact_page import ContactPage
 
 
 @pytest.fixture(scope="function")
@@ -39,6 +40,11 @@ def register_page(page: Page):
 @pytest.fixture(scope="function")
 def login_page(page: Page):
     return LoginPage(page)
+
+
+@pytest.fixture(scope="function")
+def contact_page(page: Page):
+    return ContactPage(page)
 
 
 @pytest.fixture(scope="function")
