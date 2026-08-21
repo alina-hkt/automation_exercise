@@ -12,8 +12,7 @@ class ContactPage(BasePage):
         self.upload_file_input = page.locator("input[name=\"upload_file\"]")
         self.submit_btn = page.get_by_role("button", name="Submit")
         
-        self.success_message = page.locator(".status.alert-success").filter(has_text="Success! Your details have been submitted successfully.")
-        
+        self.success_message = page.locator("#contact-page").get_by_text("Success! Your details have been submitted successfully.")
         self.home_link = page.get_by_role("link", name="Home") 
         if not self.home_link.is_visible(timeout=self.config.PAGE_LOAD_TIMEOUT):
              self.home_link = page.locator("img[alt='Website for automation practice']")
