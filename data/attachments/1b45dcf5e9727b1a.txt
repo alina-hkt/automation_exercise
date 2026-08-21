@@ -93,7 +93,7 @@
 
 						<div id="form-section">
 						<form id="contact-us-form" action="/contact_us" class="contact-form row" name="contact-form" method="post">
-				            <input type="hidden" name="csrfmiddlewaretoken" value="pRImc9yyWUuK6RlNiUQuI5VNfhjBOZYevcc6etpHXusLNsG05K7BazLIYZf6eU41" style="">
+				            <input type="hidden" name="csrfmiddlewaretoken" value="GGdqfcpk92fN1W1hLA5zZoWlqCK33G8anJNd2NxyXmiaGCCgpuFcLBoDICy89MWO" style="">
 							<div class="form-group col-md-6">
 				                <input type="text" name="name" data-qa="name" class="form-control" placeholder="Name" style="">
 				            </div>
@@ -148,7 +148,7 @@
 						<div class="single-widget">
 							<h2>Subscription</h2>
 							<form class="searchform" method="POST">
-								<input type="hidden" name="csrfmiddlewaretoken" value="pRImc9yyWUuK6RlNiUQuI5VNfhjBOZYevcc6etpHXusLNsG05K7BazLIYZf6eU41" style="">
+								<input type="hidden" name="csrfmiddlewaretoken" value="GGdqfcpk92fN1W1hLA5zZoWlqCK33G8anJNd2NxyXmiaGCCgpuFcLBoDICy89MWO" style="">
 								<input type="email" id="susbscribe_email" required="" placeholder="Your email address" style="">
 								<button type="submit" id="subscribe" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
 								<p>Get the most recent updates from <br>our site and be updated your self...</p>
