@@ -41,22 +41,23 @@ class ContactPage(BasePage):
         try:
             expect(locator).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         except AssertionError:
-            screenshot_path = "debug_contact_success.png"
-            self.page.screenshot(path=screenshot_path)
-            allure.attach.file(
-                screenshot_path, 
-                name="Debug Screenshot", 
-                attachment_type=allure.attachment_type.PNG
-            )
+            if not os.getenv("CI"):
+                screenshot_path = "debug_contact_success.png"
+                self.page.screenshot(path=screenshot_path)
+                allure.attach.file(
+                    screenshot_path, 
+                    name="Debug Screenshot", 
+                    attachment_type=allure.attachment_type.PNG
+                )
+                
+                html_content = self.page.content()
+                allure.attach(
+                    html_content, 
+                    name="Page HTML on Failure", 
+                    attachment_type=allure.attachment_type.TEXT
+                )
             
-            html_content = self.page.content()
-            allure.attach(
-                html_content, 
-                name="Page HTML on Failure", 
-                attachment_type=allure.attachment_type.TEXT
-            )
-            
-            raise AssertionError("Сообщение об успехе не найдено. См. вложения в отчете Allure.")
+            raise AssertionError("Сообщение об успехе не найдено.")
 
     def click_home(self):
         self.click(self.home_link)
