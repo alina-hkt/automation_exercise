@@ -15,22 +15,22 @@ def test_contact_us_form(home_page, contact_page):
         with open(upload_file_path, "w", encoding="utf-8") as f:
             f.write("Test content for automation upload")
 
-    with allure.step("1. Запустить браузер"):
+    with allure.step("1. Launch browser."):
         pass
         
-    with allure.step("2. Перейти на URL 'http://automationexercise.com'"):
+    with allure.step("2. Navigate to url 'http://automationexercise.com'."):
         home_page.open_home()
         
-    with allure.step("3. Убедиться, что главная страница отображается успешно"):
+    with allure.step("3. Verify that home page is visible successfully."):
         home_page.verify_logo_visible()
         
-    with allure.step("4. Нажать кнопку 'Contact Us'"):
+    with allure.step("4. Click on 'Contact Us' button."):
         home_page.click_contact_us() 
         
-    with allure.step("5. Убедиться, что заголовок 'GET IN TOUCH' виден"):
+    with allure.step("5. Verify 'GET IN TOUCH' is visible."):
         contact_page.wait_for_visible(contact_page.get_in_touch_heading)
         
-    with allure.step("6. Ввести имя, email, тему и сообщение"):
+    with allure.step("6. Enter name, email, subject and message."):
         contact_page.fill_contact_form(
             name="Auto Tester",
             email=dynamic_email,
@@ -39,20 +39,20 @@ def test_contact_us_form(home_page, contact_page):
             file_path=upload_file_path
         )
         
-    with allure.step("7. Загрузить файл"):
+    with allure.step("7. Upload file."):
        
         pass 
         
-    with allure.step("8. Нажать кнопку 'Submit'"):
+    with allure.step("8. Click 'Submit' button."):
         contact_page.click_submit_and_handle_alert()
         
-    with allure.step("9. Нажать кнопку 'OK' во всплывающем окне"):
+    with allure.step("9. Click OK button."):
         pass
         
-    with allure.step("10. Убедиться, что сообщение об успехе видно"):
+    with allure.step("10. Verify success message 'Success! Your details have been submitted successfully.' is visible."):
         contact_page.verify_success_message()
         
-    with allure.step("11. Нажать кнопку 'Home' и убедиться, что попали на главную страницу"):
+    with allure.step("11. Click 'Home' button and verify that landed to home page successfully."):
         contact_page.click_home()
         home_page.verify_logo_visible()
         assert "Automation Exercise" in home_page.get_page_title()

@@ -44,33 +44,33 @@ def test_Login_User_Correct(home_page, register_page, login_page, account_delete
             
     login_page.verify_returned_to_login_page()
     
-    with allure.step("1. Запустить браузер"):
+    with allure.step("1. Launch browser."):
         pass
         
-    with allure.step("2. Перейти на URL 'http://automationexercise.com'"):
+    with allure.step("2. Navigate to url 'http://automationexercise.com'."):
         home_page.open_home()
         
-    with allure.step("3. Убедиться, что главная страница отображается успешно"):
+    with allure.step("3. Verify that home page is visible successfully."):
         home_page.verify_logo_visible()
         
-    with allure.step("4. Нажать кнопку 'Signup / Login'"):
+    with allure.step("4. Click on 'Signup / Login' button."):
         home_page.click_login_signup()
         
-    with allure.step("5. Убедиться, что форма 'Login to your account' видна"):
+    with allure.step("5. Verify 'Login to your account' is visible."):
         login_page.wait_for_login_form()
         
-    with allure.step("6. Ввести корректный email и пароль"):
+    with allure.step("6. Enter correct email address and password."):
         login_page.fill_email(dynamic_email)
         login_page.fill_password(config.TEST_USER_PASSWORD)
         
-    with allure.step("7. Нажать кнопку 'login'"):
+    with allure.step("7. Click 'login' button."):
         login_page.click_login()
         
-    with allure.step("8. Убедиться, что 'Logged in as username' виден"):
+    with allure.step("8. Verify that 'Logged in as username' is visible."):
         login_page.verify_logged_in(username)
         
-    with allure.step("9. Нажать кнопку 'Logout'"):
+    with allure.step("9. Click 'Logout' button."):
         login_page.click_logout()
         
-    with allure.step("10. Убедиться, что пользователь перенаправлен на страницу входа"):
+    with allure.step("10. Verify that user is navigated to login page."):
         login_page.verify_returned_to_login_page()

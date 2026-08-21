@@ -38,7 +38,7 @@ class ContactPage(BasePage):
         )
         
         try:
-            expect(locator).to_be_visible(timeout=10000)
+            expect(locator).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         except AssertionError:
             screenshot_path = "debug_contact_success.png"
             self.page.screenshot(path=screenshot_path)
