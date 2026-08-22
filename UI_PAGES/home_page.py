@@ -13,6 +13,10 @@ class HomePage(BasePage):
         self.delete_account_btn = page.get_by_role("link", name="Delete Account")
         self.test_cases_link = page.get_by_role("link", name="Test Cases", exact=True)
         self.test_cases_heading = page.locator("h2").filter(has_text="Test Cases")
+        self.subscription_heading = page.locator("h2").filter(has_text="SUBSCRIPTION")
+        self.subscription_input = page.locator("#susbscribe_email")
+        self.subscription_btn = page.locator("#subscribe")
+
 
     def open_home(self):
         self.open()
@@ -57,3 +61,18 @@ class HomePage(BasePage):
     def verify_test_cases_page_loaded(self):
         self.wait_for_visible(self.test_cases_heading)
         assert "Test Cases" in self.get_page_title(), "Title does not contain 'Test Cases'"
+
+    def scroll_to_footer(self):
+        self.subscription_heading.scroll_into_view_if_needed()
+
+    def verify_subscription_heading_visible(self):
+        self.wait_for_visible(self.subscription_heading)
+
+    def subscribe(self, email: str):
+        self.fill(self.subscription_input, email)
+        self.page.on("dialog", lambda dialog: dialog.accept())
+        self.click(self.subscription_btn)
+
+    def verify_success_message(self):
+        success_msg = self.page.locator(".alert-success").filter(has_text="You have been successfully subscribed!")
+        self.wait_for_visible(success_msg)
