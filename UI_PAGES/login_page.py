@@ -31,7 +31,6 @@ class LoginPage(BasePage):
         self.wait_for_visible(self.error_message)
 
     def verify_logged_in(self, username: str):
-        self.page.reload(wait_until="networkidle", timeout=self.config.PAGE_LOAD_TIMEOUT)
         self.page.wait_for_load_state("domcontentloaded", timeout=self.config.PAGE_LOAD_TIMEOUT)
         header_text = self.header_container.text_content()
         assert f"Logged in as {username}" in header_text, \
