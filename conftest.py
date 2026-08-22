@@ -7,6 +7,8 @@ from UI_PAGES.login_page import LoginPage
 from UI_PAGES.contact_page import ContactPage
 from UI_PAGES.products_page import ProductsPage
 from UI_PAGES.product_detail_page import ProductDetailPage
+from UI_PAGES.cart_page import CartPage
+
 
 @pytest.fixture(scope="function")
 def browser_context(browser: Browser):
@@ -53,3 +55,7 @@ def products_page(page: Page):
 @pytest.fixture(scope="function")
 def product_detail_page(page: Page):
     return ProductDetailPage(page)
+
+@pytest.fixture(scope="function")
+def cart_page(page: Page):
+    return CartPage(page)
