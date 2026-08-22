@@ -11,7 +11,8 @@ class HomePage(BasePage):
         self.products_heading = page.locator("h2").filter(has_text="All Products")
         self.header_container = page.locator("header")
         self.delete_account_btn = page.get_by_role("link", name="Delete Account")
-
+        self.test_cases_link = page.get_by_role("link", name="Test Cases", exact=True)
+        self.test_cases_heading = page.locator("h2").filter(has_text="Test Cases")
 
     def open_home(self):
         self.open()
@@ -48,3 +49,11 @@ class HomePage(BasePage):
 
     def click_delete_account(self):
         self.click(self.delete_account_btn)
+
+    def click_test_cases(self):
+        self.click(self.test_cases_link)
+        self.wait_for_visible(self.test_cases_heading)
+
+    def verify_test_cases_page_loaded(self):
+        self.wait_for_visible(self.test_cases_heading)
+        assert "Test Cases" in self.get_page_title(), "Title does not contain 'Test Cases'"
