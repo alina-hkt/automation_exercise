@@ -11,6 +11,8 @@ from UI_PAGES.cart_page import CartPage
 from UI_PAGES.checkout_page import CheckoutPage
 from UI_PAGES.signup_page import SignupPage
 from UI_PAGES.payment_page import PaymentPage
+from UI_COMPONENTS.sidebar import SidebarComponent
+
 
 
 @pytest.fixture(scope="function")
@@ -74,3 +76,7 @@ def signup_page(page: Page):
 @pytest.fixture(scope="function")
 def payment_page(page: Page): 
     return PaymentPage(page)
+
+@pytest.fixture(scope="function")
+def sidebar(page: Page): 
+    return SidebarComponent(page)
