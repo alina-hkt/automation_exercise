@@ -64,12 +64,12 @@ class ProductsPage(BasePage):
 
     def click_continue_shopping(self):
         self.wait_for_visible(self.continue_shopping_btn)
-        self.continue_shopping_btn.click(force=True)
+        self.continue_shopping_btn.click()
         self.cart_modal.wait_for(state="hidden", timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def click_view_cart(self):
         self.wait_for_visible(self.view_cart_btn_modal, timeout=self.config.PAGE_LOAD_TIMEOUT)
-        self.view_cart_btn_modal.click(force=True)
+        self.view_cart_btn_modal.click()
         self.page.wait_for_url("**/view_cart", timeout=self.config.PAGE_LOAD_TIMEOUT)
         
         return ProductDetailPage(self.page)

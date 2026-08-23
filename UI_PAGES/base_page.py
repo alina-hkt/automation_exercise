@@ -25,3 +25,6 @@ class BasePage:
 
     def is_visible(self, locator) -> bool:
         return locator.is_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+
+    def select_option(self, locator, value: str):
+        locator.select_option(value=value, timeout=self.config.PAGE_LOAD_TIMEOUT)

@@ -8,6 +8,9 @@ from UI_PAGES.contact_page import ContactPage
 from UI_PAGES.products_page import ProductsPage
 from UI_PAGES.product_detail_page import ProductDetailPage
 from UI_PAGES.cart_page import CartPage
+from UI_PAGES.checkout_page import CheckoutPage
+from UI_PAGES.signup_page import SignupPage
+from UI_PAGES.payment_page import PaymentPage
 
 
 @pytest.fixture(scope="function")
@@ -59,3 +62,15 @@ def product_detail_page(page: Page):
 @pytest.fixture(scope="function")
 def cart_page(page: Page):
     return CartPage(page)
+
+@pytest.fixture(scope="function")
+def checkout_page(page: Page): 
+    return CheckoutPage(page)
+
+@pytest.fixture(scope="function")
+def signup_page(page: Page): 
+    return SignupPage(page)
+
+@pytest.fixture(scope="function")
+def payment_page(page: Page): 
+    return PaymentPage(page)
