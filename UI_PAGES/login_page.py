@@ -18,6 +18,12 @@ class LoginPage(BasePage):
     def wait_for_login_form(self):
         self.wait_for_visible(self.login_heading)
 
+    def fill_login_form(self, email: str, password: str):
+        """Заполняет оба поля и нажимает Login (удобная обертка)"""
+        self.fill_email(email)
+        self.fill_password(password)
+        self.click_login()
+
     def fill_email(self, email: str):
         self.fill(self.email_input, email)
 
