@@ -62,6 +62,11 @@ class HomePage(BasePage):
         self.wait_for_visible(self.test_cases_heading)
         assert "Test Cases" in self.get_page_title(), "Title does not contain 'Test Cases'"
 
+    def click_first_view_product_on_home(self):
+        view_product_btn = self.page.get_by_text("View Product").first
+        view_product_btn.scroll_into_view_if_needed()
+        view_product_btn.click(force=True)
+
     def scroll_to_footer(self):
         self.subscription_heading.scroll_into_view_if_needed()
 

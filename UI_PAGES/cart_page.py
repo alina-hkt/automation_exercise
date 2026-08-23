@@ -25,3 +25,9 @@ class CartPage(BasePage):
         
         assert "Rs." in self.first_product_price.text_content()
         assert "Rs." in self.second_product_price.text_content()
+
+    def verify_product_quantity(self, expected_qty: str):
+        qty_locator = self.page.get_by_role("button", name=expected_qty)
+        self.wait_for_visible(qty_locator)
+        actual_text = qty_locator.text_content()
+        assert actual_text == expected_qty, f"Expected qty '{expected_qty}', got '{actual_text}'"
