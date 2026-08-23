@@ -10,9 +10,12 @@ class CartPage(BasePage):
         self.second_product_price = page.get_by_text("Rs.").nth(3)
         self.first_product_name = page.get_by_text("Blue Top")
         self.second_product_name = page.get_by_text("Men Tshirt")
+        self.delete_btn_first = page.locator(".cart_quantity_delete").first
+        self.empty_cart_message = page.locator("b").filter(has_text="Cart is empty!")
+        self.product_rows = page.locator("#product-1")
 
     def verify_cart_loaded(self):
-        self.page.wait_for_url("**/view_cart", timeout=self.config.PAGE_LOAD_TIMEOUT)
+        self.page.wait_for_url("**/view_cart", timeout=self.config.SHORT_TIMEOUT)
         self.wait_for_visible(self.cart_heading)
 
     def verify_products_in_cart(self):
@@ -31,3 +34,11 @@ class CartPage(BasePage):
         self.wait_for_visible(qty_locator)
         actual_text = qty_locator.text_content()
         assert actual_text == expected_qty, f"Expected qty '{expected_qty}', got '{actual_text}'"
+
+    def click_delete_first_product(self):
+        self.wait_for_visible(self.delete_btn_first)
+        self.delete_btn_first.click()
+        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+
+    def verify_cart_is_empty(self):
+        self.wait_for_visible(self.empty_cart_message)
