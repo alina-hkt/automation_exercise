@@ -1,5 +1,6 @@
 from playwright.sync_api import Page
 from UI_PAGES.base_page import BasePage
+from playwright.sync_api import expect
 
 class HomePage(BasePage):
     def __init__(self, page: Page):
@@ -16,6 +17,8 @@ class HomePage(BasePage):
         self.subscription_heading = page.locator("h2").filter(has_text="SUBSCRIPTION")
         self.subscription_input = page.locator("#susbscribe_email")
         self.subscription_btn = page.locator("#subscribe")
+        self.logged_in_indicator = self.page.locator(":has-text('Logged in as')").first
+
 
 
     def open_home(self):
@@ -38,18 +41,16 @@ class HomePage(BasePage):
 
     def click_products(self):
         self.click(self.products_link)
-        self.page.wait_for_url("**/products", timeout=self.config.PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
+        self.page.wait_for_url("**/products", wait_until="domcontentloaded")
         self.wait_for_visible(self.products_heading)
 
     def click_login_signup(self):
         self.click(self.login_signup_link)
 
     def verify_logged_in(self, username: str):
-        self.page.reload(wait_until="networkidle", timeout=self.config.PAGE_LOAD_TIMEOUT)
-        self.page.wait_for_load_state("domcontentloaded", timeout=self.config.PAGE_LOAD_TIMEOUT)
-        header_text = self.header_container.text_content()
-        assert "Logged in" in header_text, f"'Logged in' not found in header. Actual: {header_text}"
-        assert username in header_text, f"User '{username}' not found in header. Actual: {header_text}"
+        expect(self.logged_in_indicator).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        actual_text = self.logged_in_indicator.text_content()
+        assert username in actual_text, f"Expected username '{username}' not found in '{actual_text}'"
 
     def click_delete_account(self):
         self.click(self.delete_account_btn)
