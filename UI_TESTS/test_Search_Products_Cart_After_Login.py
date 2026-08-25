@@ -60,7 +60,7 @@ def test_Search_Products_Cart_After_Login(home_page, login_page, products_page, 
 
     with allure.step("9. Click 'Cart' button and verify that products are visible in cart."):
         home_page.click_cart()
-        cart_page.verify_products_in_cart()
+        cart_page.verify_searched_products_in_cart()
 
     with allure.step("10. Click 'Signup / Login' button and submit login details."):
         home_page.open_home()
@@ -75,4 +75,4 @@ def test_Search_Products_Cart_After_Login(home_page, login_page, products_page, 
         home_page.click_cart()
 
     with allure.step("12. Verify that those products are visible in cart after login as well."):
-        cart_page.verify_products_in_cart()
+        cart_page.verify_searched_products_in_cart()
