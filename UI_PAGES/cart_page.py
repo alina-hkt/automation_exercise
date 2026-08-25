@@ -9,7 +9,7 @@ class CartPage(BasePage):
         self.first_product_price = page.get_by_text("Rs.").nth(1)
         self.second_product_price = page.get_by_text("Rs.").nth(3)
         self.first_product_name = page.get_by_text("Blue Top")
-        self.second_product_name = page.get_by_text("Winter Top")
+        self.second_product_name = page.get_by_text("Men Tshirt")
         self.delete_btn_first = page.locator(".cart_quantity_delete").first
         self.empty_cart_message = page.locator("b").filter(has_text="Cart is empty!")
         self.product_rows = page.locator("#product-1")
