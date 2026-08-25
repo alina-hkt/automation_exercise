@@ -9,7 +9,7 @@ class CartPage(BasePage):
         self.first_product_price = page.get_by_text("Rs.").nth(1)
         self.second_product_price = page.get_by_text("Rs.").nth(3)
         self.first_product_name = page.get_by_text("Blue Top")
-        self.second_product_name = page.get_by_text("Men Tshirt")
+        self.second_product_name = page.get_by_text("Winter Top")
         self.delete_btn_first = page.locator(".cart_quantity_delete").first
         self.empty_cart_message = page.locator("b").filter(has_text="Cart is empty!")
         self.product_rows = page.locator("#product-1")
@@ -25,7 +25,6 @@ class CartPage(BasePage):
     def verify_prices_and_quantity(self):
         self.wait_for_visible(self.first_product_price)
         self.wait_for_visible(self.second_product_price)
-        
         assert "Rs." in self.first_product_price.text_content()
         assert "Rs." in self.second_product_price.text_content()
 

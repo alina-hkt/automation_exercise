@@ -1,6 +1,5 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 from UI_PAGES.base_page import BasePage
-from playwright.sync_api import expect
 
 class HomePage(BasePage):
     def __init__(self, page: Page):
@@ -19,8 +18,6 @@ class HomePage(BasePage):
         self.subscription_btn = page.locator("#subscribe")
         self.logged_in_indicator = self.page.locator(":has-text('Logged in as')").first
 
-
-
     def open_home(self):
         self.open()
 
@@ -37,7 +34,9 @@ class HomePage(BasePage):
         return self.is_visible(self.cart_button)
 
     def click_cart(self):
-        self.click(self.cart_button)
+        cart_locator = self.page.locator("a[href='/view_cart']").first
+        self.wait_for_visible(cart_locator)
+        self.click(cart_locator)
 
     def click_products(self):
         self.click(self.products_link)
@@ -48,7 +47,7 @@ class HomePage(BasePage):
         self.click(self.login_signup_link)
 
     def verify_logged_in(self, username: str):
-        expect(self.logged_in_indicator).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.logged_in_indicator).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         actual_text = self.logged_in_indicator.text_content()
         assert username in actual_text, f"Expected username '{username}' not found in '{actual_text}'"
 
