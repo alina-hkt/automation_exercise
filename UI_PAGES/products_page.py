@@ -90,3 +90,11 @@ class ProductsPage(BasePage):
 
     def click_first_view_product(self) -> ProductDetailPage:
         self.page.goto(f"{self.config.BASE_URL}/product_details/1")
+
+    def click_view_product(self, index: int = 0):
+        view_product_btns = self.page.locator("a[href*='/product_details/']")
+        btn = view_product_btns.nth(index)
+        btn.scroll_into_view_if_needed()
+        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+        btn.click()
+        self.page.wait_for_url("**/product_details/**", timeout=self.config.SHORT_TIMEOUT)

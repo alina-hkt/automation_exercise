@@ -20,7 +20,7 @@ class ContactPage(BasePage):
         self.get_in_touch_heading = page.locator("h2").filter(has_text="GET IN TOUCH")
 
     def fill_contact_form(self, name: str, email: str, subject: str, message: str, file_path: str):
-        expect(self.name_input).to_be_visible(PAGE_LOAD_TIMEOUT)
+        expect(self.name_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.name_input.fill(name)
 
         expect(self.email_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
@@ -47,7 +47,7 @@ class ContactPage(BasePage):
     def verify_success_message(self):
         expect(self.success_message).to_have_count(1, timeout=self.config.SHORT_TIMEOUT)
         
-        expect(self.success_message).to_contain_text(timeout=self.config.
+        expect(self.success_message).to_contain_text(
             "Success! Your details have been submitted successfully.", 
             timeout=self.config.SHORT_TIMEOUT
         )
