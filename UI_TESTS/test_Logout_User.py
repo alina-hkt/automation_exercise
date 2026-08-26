@@ -74,6 +74,11 @@ def test_Login_User_Correct(home_page, register_page, login_page, account_delete
         
     with allure.step("10. Verify that user is navigated to login page."):
         login_page.verify_returned_to_login_page()
+        home_page.click_login_signup()
+        login_page.wait_for_login_form()
+        login_page.fill_email(dynamic_email)
+        login_page.fill_password(config.TEST_USER_PASSWORD)
+        login_page.click_login()
         home_page.click_delete_account()
         account_deleted_page.verify_heading_visible()
         account_deleted_page.click_continue()

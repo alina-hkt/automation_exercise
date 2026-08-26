@@ -20,19 +20,19 @@ class ContactPage(BasePage):
         self.get_in_touch_heading = page.locator("h2").filter(has_text="GET IN TOUCH")
 
     def fill_contact_form(self, name: str, email: str, subject: str, message: str, file_path: str):
-        expect(self.name_input).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.name_input).to_be_visible(PAGE_LOAD_TIMEOUT)
         self.name_input.fill(name)
 
-        expect(self.email_input).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.email_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.email_input.fill(email)
 
-        expect(self.subject_input).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.subject_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.subject_input.fill(subject)
 
-        expect(self.message_input).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.message_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.message_input.fill(message)
 
-        expect(self.upload_file_input).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.upload_file_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.upload_file_input.set_input_files(file_path)
         
         self.page.wait_for_timeout(2000)
@@ -42,16 +42,16 @@ class ContactPage(BasePage):
         
         self.click(self.submit_btn)
         
-        self.page.wait_for_load_state("networkidle", timeout=self.config.PAGE_LOAD_TIMEOUT)
+        self.page.wait_for_load_state("networkidle", timeout=self.config.SHORT_TIMEOUT)
 
     def verify_success_message(self):
-        expect(self.success_message).to_have_count(1, timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.success_message).to_have_count(1, timeout=self.config.SHORT_TIMEOUT)
         
-        expect(self.success_message).to_contain_text(
+        expect(self.success_message).to_contain_text(timeout=self.config.
             "Success! Your details have been submitted successfully.", 
-            timeout=self.config.PAGE_LOAD_TIMEOUT
+            timeout=self.config.SHORT_TIMEOUT
         )
 
     def click_home(self):
         self.click(self.home_link)
-        self.page.wait_for_url("**/", timeout=self.config.PAGE_LOAD_TIMEOUT)
+        self.page.wait_for_url("**/", timeout=self.config.SHORT_TIMEOUT)

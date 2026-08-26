@@ -30,7 +30,7 @@ class ProductDetailPage(BasePage):
 
     def click_view_cart(self):
         self.click(self.view_cart_btn)
-        self.page.wait_for_url("**/view_cart", timeout=self.config.PAGE_LOAD_TIMEOUT)
+        self.page.wait_for_url("**/view_cart", timeout=self.config.SHORT_TIMEOUT)
 
     def verify_details_visible(self):
         self.wait_for_visible(self.product_name)
