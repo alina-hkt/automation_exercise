@@ -13,6 +13,7 @@ class CartPage(BasePage):
         self.delete_btn_first = page.locator(".cart_quantity_delete").first
         self.empty_cart_message = page.locator("b").filter(has_text="Cart is empty!")
         self.product_rows = page.locator("#product-1")
+        self.proceed_to_checkout_btn = page.locator(".btn-default.check_out")
 
     def verify_cart_loaded(self):
         self.page.wait_for_url("**/view_cart", timeout=self.config.SHORT_TIMEOUT)
@@ -58,3 +59,7 @@ class CartPage(BasePage):
             self.page.screenshot(path="debug_cart_not_found.png")
             raise AssertionError(f"Product '{product_name}' not found in cart!")
         assert product_row.count() >= 1, f"Expected at least 1 item '{product_name}', but found {product_row.count()}"
+
+    def click_proceed_to_checkout(self):
+        self.wait_for_visible(self.proceed_to_checkout_btn)
+        self.click(self.proceed_to_checkout_btn)

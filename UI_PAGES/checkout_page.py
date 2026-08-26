@@ -12,10 +12,12 @@ class CheckoutPage(BasePage):
         self.order_review = page.locator("h2").filter(has_text="Review Your Order")
         self.comment_textarea = page.locator("textarea[name='message']")
         self.place_order_btn = page.get_by_text("Place Order")
+        self.checkout_heading = page.locator("h2").filter(has_text="Checkout")
 
     def click_proceed_to_checkout(self):
         self.wait_for_visible(self.proceed_to_checkout_btn)
         self.proceed_to_checkout_btn.click()
+        self.wait_for_visible(self.checkout_heading)
 
     def click_register_login(self):
         self.wait_for_visible(self.register_login_btn)
@@ -39,3 +41,27 @@ class CheckoutPage(BasePage):
         self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
         
         self.place_order_btn.evaluate("el => el.click()")
+
+    def verify_address_matches(self, expected_name: str, expected_address: str,
+                                expected_city: str, expected_state: str,
+                                expected_zip: str, expected_mobile: str):
+        delivery_text = self.get_delivery_address_text()
+        billing_text = self.get_billing_address_text()
+        for field_name, field_value in [
+            ("name", expected_name),
+            ("address", expected_address),
+            ("city", expected_city),
+            ("state", expected_state),
+            ("zip", expected_zip),
+            ("mobile", expected_mobile)
+        ]:
+            assert field_value.lower() in delivery_text.lower(), \
+                f"Delivery address missing {field_name}: '{field_value}'"
+            assert field_value.lower() in billing_text.lower(), \
+                f"Billing address missing {field_name}: '{field_value}'"
+
+    def get_delivery_address_text(self) -> str:
+        return self.delivery_address.text_content() or ""
+
+    def get_billing_address_text(self) -> str:
+        return self.billing_address.text_content() or ""

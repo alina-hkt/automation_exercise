@@ -8,7 +8,7 @@ class BasePage:
 
     def open(self, url: str = None):
         target_url = url or self.config.BASE_URL
-        self.page.goto(target_url, timeout=self.config.SHORT_TIMEOUT)
+        self.page.goto(target_url, timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def get_title(self) -> str:
         return self.page.title()
