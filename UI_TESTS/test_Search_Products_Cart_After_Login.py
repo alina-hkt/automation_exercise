@@ -4,7 +4,7 @@ import allure
 from config import Config
 
 @pytest.mark.smoke
-def test_Search_Products_Cart_After_Login(home_page, login_page, products_page, cart_page, register_page):
+def test_Search_Products_Cart_After_Login(home_page, account_deleted_page, login_page, products_page, cart_page, register_page):
     config = Config()
     username = "ALINA_SEARCH"
     dynamic_email = f"alina_search_{int(time.time())}@test.com"
@@ -76,3 +76,6 @@ def test_Search_Products_Cart_After_Login(home_page, login_page, products_page, 
 
     with allure.step("12. Verify that those products are visible in cart after login as well."):
         cart_page.verify_searched_products_in_cart()
+        home_page.click_delete_account()
+        account_deleted_page.verify_heading_visible()
+        account_deleted_page.click_continue()
