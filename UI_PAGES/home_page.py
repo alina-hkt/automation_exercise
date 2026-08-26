@@ -17,6 +17,8 @@ class HomePage(BasePage):
         self.subscription_input = page.locator("#susbscribe_email")
         self.subscription_btn = page.locator("#subscribe")
         self.logged_in_indicator = self.page.locator(":has-text('Logged in as')").first
+        self.recommended_heading = page.locator("h2").filter(has_text="recommended items")
+        self.recommended_items = page.locator(".recommended_items .item")
 
     def open_home(self):
         self.open()
@@ -81,3 +83,49 @@ class HomePage(BasePage):
     def verify_success_message(self):
         success_msg = self.page.locator(".alert-success").filter(has_text="You have been successfully subscribed!")
         self.wait_for_visible(success_msg)
+
+    def scroll_to_recommended_items(self):
+        recommended_container = self.page.locator(".recommended_items")
+        recommended_container.scroll_into_view_if_needed()
+        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT) 
+
+    def verify_recommended_items_visible(self):
+        self.wait_for_visible(self.recommended_heading)
+        assert self.recommended_items.count() > 0, "No recommended items found!"
+
+    def scroll_recommended_carousel_to_start(self):
+        prev_btn = self.page.locator(".recommended_items .left.carousel-control")
+        while prev_btn.is_visible():
+            prev_btn.click()
+            self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+            if not prev_btn.is_visible():
+                break
+        first_item = self.page.locator(".recommended_items .item.active .productinfo p").first
+        try:
+            first_item.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
+        except:
+            pass
+
+    def add_recommended_product_to_cart(self, index: int = 0):
+        add_btns = self.page.locator(".recommended_items .productinfo > .btn")
+        add_btns.first.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
+        total = add_btns.count()
+        assert total > 0, "No Add to Cart buttons found!"
+        assert index < total, f"Index {index} out of range"
+        btn = add_btns.nth(index)
+        btn.scroll_into_view_if_needed()
+        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+        btn.click(force=True)
+        view_cart_link = self.page.locator("#cartModal a[href='/view_cart']")
+        view_cart_link.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
+        view_cart_link.click()
+        self.page.wait_for_url("**/view_cart", timeout=self.config.SHORT_TIMEOUT)
+
+    def get_recommended_product_name(self, index: int = 0) -> str:
+        name_locator = self.page.locator(".recommended_items .productinfo p").nth(index)
+        try:
+            name_locator.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
+        except:
+            pass
+        text = name_locator.text_content()
+        return text.strip() if text else "Unknown Product"
