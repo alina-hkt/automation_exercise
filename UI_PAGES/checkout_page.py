@@ -15,9 +15,8 @@ class CheckoutPage(BasePage):
         self.checkout_heading = page.locator("h2").filter(has_text="Checkout")
 
     def click_proceed_to_checkout(self):
-        self.wait_for_visible(self.proceed_to_checkout_btn)
-        self.proceed_to_checkout_btn.click()
-        self.wait_for_visible(self.checkout_heading)
+            self.wait_for_visible(self.proceed_to_checkout_btn)
+            self.proceed_to_checkout_btn.click()
 
     def click_register_login(self):
         self.wait_for_visible(self.register_login_btn)

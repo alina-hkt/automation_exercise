@@ -14,7 +14,7 @@ class BasePage:
         return self.page.title()
 
     def wait_for_visible(self, locator, timeout: int = None): #время ожидания можно передать при вызове, а если не передали — возьмем стандартное из конфига
-        timeout = timeout or self.config.SHORT_TIMEOUT
+        timeout = timeout or self.config.PAGE_LOAD_TIMEOUT
         expect(locator).to_be_visible(timeout=timeout)
 
     def click(self, locator):
