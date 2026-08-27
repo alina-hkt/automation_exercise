@@ -3,7 +3,6 @@ import time
 import allure
 from config import Config
 
-@pytest.mark.smoke
 def test_Login_User_Correct(home_page, register_page, login_page, account_deleted_page): 
     config = Config()
     username = "ALINA"

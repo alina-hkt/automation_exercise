@@ -3,7 +3,6 @@ import time
 import allure
 from config import Config
 
-@pytest.mark.smoke
 def test_Search_Products_Cart_After_Login(home_page, account_deleted_page, login_page, products_page, cart_page, register_page):
     config = Config()
     username = "ALINA_SEARCH"
@@ -37,7 +36,7 @@ def test_Search_Products_Cart_After_Login(home_page, account_deleted_page, login
     with allure.step("1. Launch browser."):
         home_page.open_home()
 
-    with allure.step("2. Navigate to url 'http://automationexercise.com'.."):
+    with allure.step("2. Navigate to url 'http://automationexercise.com'."):
         home_page.verify_logo_visible()
 
     with allure.step("3. Click on 'Products' button."):

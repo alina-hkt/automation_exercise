@@ -4,7 +4,6 @@ import allure
 import time
 from config import Config
 
-@pytest.mark.smoke
 def test_contact_us_form(home_page, contact_page):
     config = Config()
 

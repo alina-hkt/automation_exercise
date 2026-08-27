@@ -2,7 +2,6 @@ import pytest
 import allure
 from config import Config
 
-@pytest.mark.smoke
 def test_verify_all_products_and_detail(home_page, products_page, product_detail_page):
     config = Config()
     

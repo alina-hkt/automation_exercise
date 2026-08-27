@@ -2,7 +2,6 @@ import pytest
 import allure
 from config import Config
 
-@pytest.mark.smoke
 def test_register_user_with_existing_email(home_page, register_page):
     config = Config()
 

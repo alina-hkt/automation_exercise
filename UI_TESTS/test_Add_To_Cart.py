@@ -1,7 +1,6 @@
 import pytest
 import allure
 
-@pytest.mark.smoke
 def test_add_products_to_cart(home_page, products_page, cart_page):
     
     with allure.step("1. Launch browser."):

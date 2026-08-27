@@ -1,7 +1,6 @@
 import pytest
 import allure
 
-@pytest.mark.smoke
 def test_verify_product_quantity_in_cart(home_page, product_detail_page, cart_page):
     with allure.step("1. Launch browser."):
         pass

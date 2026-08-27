@@ -1,7 +1,6 @@
 import pytest
 import allure
 
-@pytest.mark.smoke
 def test_login_user_with_incorrect_credentials(home_page, login_page):
     
     with allure.step("1. Launch browser."):

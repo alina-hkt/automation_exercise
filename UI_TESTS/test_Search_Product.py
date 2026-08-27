@@ -1,7 +1,6 @@
 import pytest
 import allure
 
-@pytest.mark.smoke
 def test_search_product(home_page, products_page):
     
     with allure.step("1. Launch browser."):

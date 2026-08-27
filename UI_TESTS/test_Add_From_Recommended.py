@@ -1,7 +1,6 @@
 import pytest
 import allure
 
-@pytest.mark.smoke
 def test_add_to_cart_from_recommended(home_page, cart_page):
     with allure.step("1-2. Launch browser. Navigate to url 'http://automationexercise.com'."):
         home_page.open_home()

@@ -2,7 +2,6 @@ import pytest
 import allure
 from config import Config
 
-@pytest.mark.smoke
 def test_view_brand_products(home_page, products_page, sidebar):
     config = Config()
 

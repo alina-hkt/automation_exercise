@@ -2,7 +2,6 @@ import pytest
 import allure
 from config import Config
 
-@pytest.mark.smoke
 def test_scroll_up_and_down(home_page):
     config = Config()
 

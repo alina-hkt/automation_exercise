@@ -2,7 +2,6 @@ import pytest
 import allure
 from config import Config
 
-@pytest.mark.smoke
 def test_Remove_Products_From_Cart(home_page, products_page, cart_page):
     config = Config()
 

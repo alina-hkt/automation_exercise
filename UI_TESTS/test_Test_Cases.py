@@ -2,7 +2,6 @@ import pytest
 import allure
 from config import Config
 
-@pytest.mark.smoke
 def test_verify_test_cases_page(home_page):
     config = Config()
     

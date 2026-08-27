@@ -3,7 +3,6 @@ import allure
 from config import Config
 import time
 
-@pytest.mark.smoke
 def test_place_order_login_before_checkout(home_page,  register_page, login_page, products_page,
                                             cart_page, checkout_page, 
                                             payment_page, account_deleted_page): 

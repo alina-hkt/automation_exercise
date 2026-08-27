@@ -3,7 +3,6 @@ import time
 import allure
 from config import Config
 
-@pytest.mark.smoke
 def test_download_invoice_after_purchase(home_page, account_deleted_page, products_page, cart_page,
                                      signup_page, payment_page, register_page, checkout_page):
 
@@ -114,7 +113,7 @@ def test_download_invoice_after_purchase(home_page, account_deleted_page, produc
     with allure.step("18. Verify success message 'Your order has been placed successfully!'."):
         checkout_page.verify_order_placed_successfully()
                     
-    with allure.step("19. Click 'Download Invoice' button and verify invoice is downloaded successfully.."):
+    with allure.step("19. Click 'Download Invoice' button and verify invoice is downloaded successfully."):
         checkout_page.download_invoice()   
 
     with allure.step("20. Click 'Continue' button."):
