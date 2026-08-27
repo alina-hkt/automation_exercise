@@ -47,7 +47,7 @@ class CartPage(BasePage):
         self.wait_for_visible(self.cart_heading)
         top_items = self.page.locator("table tbody tr").filter(has_text="Top")
         count = top_items.count()
-        assert count > 0, f"Ожидалось найти товары с 'Top' в корзине, но найдено: {count}"
+        assert count > 0, f"Expected to find products with 'Top' in the cart, but found: {count}"
         top_items.first.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
 
     def verify_recommended_product_in_cart(self, product_name: str):
