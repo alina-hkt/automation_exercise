@@ -86,7 +86,6 @@ class ProductsPage(BasePage):
         self.wait_for_visible(self.view_cart_btn_modal, timeout=self.config.SHORT_TIMEOUT)
         self.view_cart_btn_modal.click()
         self.page.wait_for_url("**/view_cart", timeout=self.config.SHORT_TIMEOUT)
-        return ProductDetailPage(self.page)
 
     def click_first_view_product(self) -> ProductDetailPage:
         self.page.goto(f"{self.config.BASE_URL}/product_details/1")

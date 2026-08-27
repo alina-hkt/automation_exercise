@@ -1,7 +1,5 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 from UI_PAGES.base_page import BasePage
-from playwright.sync_api import expect
-
 
 class AccountDeletedPage(BasePage):
     def __init__(self, page: Page):
