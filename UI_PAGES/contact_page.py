@@ -12,11 +12,8 @@ class ContactPage(BasePage):
         self.message_input = page.get_by_placeholder("Your Message Here")
         self.upload_file_input = page.locator("input[name='upload_file']")
         self.submit_btn = page.get_by_role("button", name="Submit")
-
         self.success_message = page.locator(".status.alert-success").first
-        
         self.home_link = page.get_by_role("link", name="Home").first
-
         self.get_in_touch_heading = page.locator("h2").filter(has_text="GET IN TOUCH")
 
     def fill_contact_form(self, name: str, email: str, subject: str, message: str, file_path: str):
@@ -39,9 +36,7 @@ class ContactPage(BasePage):
 
     def click_submit_and_handle_alert(self):
         self.page.on("dialog", lambda dialog: dialog.accept())
-        
         self.click(self.submit_btn)
-        
         self.page.wait_for_load_state("networkidle", timeout=self.config.SHORT_TIMEOUT)
 
     def verify_success_message(self):

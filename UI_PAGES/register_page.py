@@ -10,7 +10,6 @@ class RegisterPage(BasePage):
         self.signup_btn = page.get_by_role("button", name="Signup")
         self.new_user_signup_heading = page.locator("h2").filter(has_text="New User Signup!")
         self.error_message = page.locator("p").filter(has_text="Email Address already exist!")
-        
         self.mrs_radio = page.get_by_text("Mrs.")
         self.password_input = page.get_by_label("Password *")
         self.days_select = page.locator("#days")
@@ -28,7 +27,6 @@ class RegisterPage(BasePage):
         self.zipcode_input = page.locator("#zipcode")
         self.mobile_input = page.get_by_label("Mobile Number *")
         self.create_account_btn = page.get_by_role("button", name="Create Account")
-        
         self.account_created_heading = page.locator("h2").filter(has_text="Account Created!")
         self.continue_btn = page.get_by_role("link", name="Continue")
 

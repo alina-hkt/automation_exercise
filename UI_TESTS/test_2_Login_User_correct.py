@@ -11,37 +11,25 @@ def test_Login_User_Correct(home_page, register_page, login_page, account_delete
         
     home_page.open_home()
     home_page.verify_logo_visible()
-    
     home_page.click_login_signup()
-    
     register_page.verify_new_user_signup_visible()
-    
     register_page.fill_name(username)
     register_page.fill_email(dynamic_email)
-    
     register_page.click_signup()
-    
     register_page.select_title_mrs()
     register_page.fill_password(config.TEST_USER_PASSWORD)
     register_page.set_date_of_birth(day="16", month="9", year="2004")
     register_page.check_newsletter()
-            
     register_page.fill_address_details(
                 first_name=username, last_name="TestUser", company="QA Corp",
                 address1="123 Test St", address2="Apt 1", country="United States",
                 state="California", city="Los Angeles", zipcode="90001", mobile="1234567890"
             )
-    
     register_page.click_create_account()
-    
     register_page.verify_account_created()
-    
     register_page.click_continue()
-    
     home_page.verify_logged_in(username)
-
     login_page.click_logout()
-            
     login_page.verify_returned_to_login_page()
     
     with allure.step("1-3. Launch browser. Navigate to url 'http://automationexercise.com'. Verify that home page is visible successfully."):
