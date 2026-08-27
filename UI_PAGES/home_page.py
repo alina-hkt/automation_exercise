@@ -149,3 +149,7 @@ class HomePage(BasePage):
         self.wait_for_visible(self.hero_text)
         scroll_y = self.page.evaluate("window.scrollY")
         assert scroll_y < 100, f"Page not scrolled to top! scrollY={scroll_y}"
+
+    def scroll_to_top(self):
+        self.page.evaluate("window.scrollTo(0, 0)")
+        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
