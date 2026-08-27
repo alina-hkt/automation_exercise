@@ -4,7 +4,7 @@ import allure
 from config import Config
 
 @pytest.mark.smoke
-def test_verify_address_in_checkout(home_page, account_deleted_page, products_page, cart_page,
+def test_download_invoice_after_purchase(home_page, account_deleted_page, products_page, cart_page,
                                      signup_page, payment_page, register_page, checkout_page):
 
     config = Config()

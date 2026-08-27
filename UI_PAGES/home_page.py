@@ -19,6 +19,9 @@ class HomePage(BasePage):
         self.logged_in_indicator = self.page.locator(":has-text('Logged in as')").first
         self.recommended_heading = page.locator("h2").filter(has_text="recommended items")
         self.recommended_items = page.locator(".recommended_items .item")
+        self.subscription_section = page.locator(".footer-widget").filter(has_text="Subscription")
+        self.scroll_up_arrow = page.locator("#scrollUp")
+        self.hero_text = page.locator("header .logo")
 
     def open_home(self):
         self.open()
@@ -129,3 +132,20 @@ class HomePage(BasePage):
             pass
         text = name_locator.text_content()
         return text.strip() if text else "Unknown Product"
+
+    def scroll_to_bottom(self):
+        self.page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+
+    def verify_subscription_visible(self):
+        self.wait_for_visible(self.subscription_section)
+
+    def click_scroll_up_arrow(self):
+        self.wait_for_visible(self.scroll_up_arrow)
+        self.click(self.scroll_up_arrow)
+        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+
+    def verify_scrolled_to_top(self):
+        self.wait_for_visible(self.hero_text)
+        scroll_y = self.page.evaluate("window.scrollY")
+        assert scroll_y < 100, f"Page not scrolled to top! scrollY={scroll_y}"
