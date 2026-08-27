@@ -37,7 +37,7 @@ class ContactPage(BasePage):
     def click_submit_and_handle_alert(self):
         self.page.on("dialog", lambda dialog: dialog.accept())
         self.click(self.submit_btn)
-        self.page.wait_for_load_state("domcontentloaded", timeout=self.config.SHORT_TIMEOUT)
+        self.page.wait_for_load_state(timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def verify_success_message(self):
         expect(self.success_message).to_have_count(1, timeout=self.config.SHORT_TIMEOUT)
