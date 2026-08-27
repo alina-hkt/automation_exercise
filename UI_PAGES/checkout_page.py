@@ -13,6 +13,8 @@ class CheckoutPage(BasePage):
         self.comment_textarea = page.locator("textarea[name='message']")
         self.place_order_btn = page.get_by_text("Place Order")
         self.checkout_heading = page.locator("h2").filter(has_text="Checkout")
+        self.download_invoice_btn = page.get_by_role("link", name="Download Invoice")
+        self.continue_btn = page.get_by_role("link", name="Continue")
 
     def click_proceed_to_checkout(self):
             self.wait_for_visible(self.proceed_to_checkout_btn)
@@ -64,3 +66,18 @@ class CheckoutPage(BasePage):
 
     def get_billing_address_text(self) -> str:
         return self.billing_address.text_content() or ""
+
+    def verify_order_placed_successfully(self):
+        self.page.wait_for_url("**/payment_done/**", timeout=self.config.SHORT_TIMEOUT)
+        self.wait_for_visible(self.download_invoice_btn, timeout=self.config.SHORT_TIMEOUT)
+
+    def download_invoice(self):
+        with self.page.expect_download(timeout=self.config.PAGE_LOAD_TIMEOUT) as download_info:
+            self.click(self.download_invoice_btn)
+        download = download_info.value
+        download_path = download.path()
+        assert download_path is not None, "Invoice download failed!"
+        return download_path
+
+    def click_continue_after_order(self):
+        self.click(self.continue_btn)
