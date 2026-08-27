@@ -11,7 +11,7 @@ def test_add_review_on_product(home_page, products_page, product_details_page):
     with allure.step("2. Navigate to url 'http://automationexercise.com'."):
         home_page.verify_logo_visible()
 
-    with allure.step("3. Click on 'Products' button".):
+    with allure.step("3. Click on 'Products' button."):
         home_page.click_products()
 
     with allure.step("4. Verify user is navigated to ALL PRODUCTS page successfully."):
