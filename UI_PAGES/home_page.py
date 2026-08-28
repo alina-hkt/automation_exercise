@@ -45,7 +45,7 @@ class HomePage(BasePage):
 
     def click_products(self):
         self.click(self.products_link)
-        self.page.wait_for_url("**/products", wait_until="domcontentloaded")
+        self.page.wait_for_url("**/products", timeout=self.config.PAGE_LOAD_TIMEOUT)
         self.wait_for_visible(self.products_heading)
 
     def click_login_signup(self):
