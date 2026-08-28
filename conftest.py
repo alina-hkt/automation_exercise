@@ -1,5 +1,5 @@
 import pytest
-from playwright.sync_api import Browser, Page
+from playwright.sync_api import Browser, Page, Playwright, APIRequestContext
 from UI_PAGES.home_page import HomePage
 from UI_PAGES.register_page import RegisterPage
 from UI_PAGES.account_deleted_page import AccountDeletedPage
@@ -13,7 +13,7 @@ from UI_PAGES.signup_page import SignupPage
 from UI_PAGES.payment_page import PaymentPage
 from UI_COMPONENTS.sidebar import SidebarComponent
 from UI_PAGES.product_details_page import ProductDetailsPage
-from playwright.sync_api import sync_playwright, APIRequestContext
+from config import Config
 
 @pytest.fixture(scope="function")
 def browser_context(browser: Browser):
@@ -86,12 +86,8 @@ def product_details_page(page: Page):
     return ProductDetailsPage(page)
 
 @pytest.fixture(scope="session")
-def request_context() -> APIRequestContext:
-    from config import Config
+def request_context(playwright: Playwright) -> APIRequestContext:
     base_url = Config.BASE_URL
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        context = browser.new_context(base_url=base_url)
-        yield context.request
-        context.request.dispose()
-        browser.close()
+    request_context = playwright.request.new_context(base_url=base_url)
+    yield request_context
+    request_context.dispose()
