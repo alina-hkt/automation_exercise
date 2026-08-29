@@ -17,8 +17,10 @@ class BasePage:
         timeout = timeout or self.config.PAGE_LOAD_TIMEOUT
         expect(locator).to_be_visible(timeout=timeout)
 
-    def click(self, locator):
-        locator.click(timeout=self.config.SHORT_TIMEOUT)
+    def click(self, locator, timeout=None):
+        if timeout is None:
+            timeout = self.config.PAGE_LOAD_TIMEOUT
+        locator.click(timeout=timeout)
 
     def fill(self, locator, text: str):
         locator.fill(text, timeout=self.config.SHORT_TIMEOUT)

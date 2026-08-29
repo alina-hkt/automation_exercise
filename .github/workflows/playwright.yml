@@ -37,7 +37,7 @@ jobs:
           echo "NAME=${{secrets.NAME}}" >> .env
           
       - name: Run Pytest
-        run: pytest UI_TESTS/ API_TESTS/ HYBRID_TESTS/ --alluredir=allure-results --clean-alluredir -v
+        run: pytest UI_TESTS/ API_TESTS/ HYBRID_TEST/ --alluredir=allure-results --clean-alluredir -v
         continue-on-error: true
 
       - name: Load Allure history

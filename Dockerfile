@@ -28,4 +28,8 @@ COPY . .
 
 RUN ls -la /app/UI_TESTS/
 
-CMD ["pytest", "UI_TESTS/", "-v", "--alluredir=allure-results", "--clean-alluredir"]
+RUN ls -la /app/API_TESTS/
+
+RUN ls -la /app/HYBRID_TEST/
+
+CMD ["pytest", "UI_TESTS/", "API_TESTS", "HYBRID_TEST", "-v", "--alluredir=allure-results", "--clean-alluredir"]

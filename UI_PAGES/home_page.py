@@ -57,7 +57,7 @@ class HomePage(BasePage):
         assert username in actual_text, f"Expected username '{username}' not found in '{actual_text}'"
 
     def click_delete_account(self):
-        self.click(self.delete_account_btn)
+        self.click(self.delete_account_btn, timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def click_test_cases(self):
         self.click(self.test_cases_link)
