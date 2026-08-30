@@ -12,6 +12,7 @@ This project uses [Ruff](https://docs.astral.sh/ruff/) for linting and formattin
 To check code quality:
 ```powershell
 ruff check .
+```
 
 ## Tech Stack
 
