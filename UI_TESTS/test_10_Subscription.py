@@ -1,10 +1,11 @@
-import pytest
 import allure
+
 from config import Config
+
 
 def test_verify_subscription(home_page):
     config = Config()
-    
+
     with allure.step("1. Launch browser."):
         pass
 

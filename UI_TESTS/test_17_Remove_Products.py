@@ -1,13 +1,14 @@
-import pytest
 import allure
+
 from config import Config
 
+
 def test_Remove_Products_From_Cart(home_page, products_page, cart_page):
-    config = Config()
+    Config()
 
     with allure.step("1. Launch browser."):
         pass
-    
+
     with allure.step("2. Navigate to url 'http://automationexercise.com'."):
         home_page.open_home()
 
@@ -21,7 +22,7 @@ def test_Remove_Products_From_Cart(home_page, products_page, cart_page):
         products_page.click_continue_shopping()
 
     with allure.step("5. Click 'Cart' button."):
-        home_page.open_home() 
+        home_page.open_home()
         home_page.click_cart()
 
     with allure.step("6. Verify that cart page is displayed."):

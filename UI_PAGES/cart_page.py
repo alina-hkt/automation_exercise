@@ -1,10 +1,12 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+
 from UI_PAGES.base_page import BasePage
+
 
 class CartPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
-        
+
         self.cart_heading = page.get_by_text("Shopping Cart")
         self.first_product_price = page.get_by_text("Rs.").nth(1)
         self.second_product_price = page.get_by_text("Rs.").nth(3)

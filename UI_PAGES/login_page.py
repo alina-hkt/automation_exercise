@@ -1,5 +1,7 @@
 from playwright.sync_api import Page
+
 from UI_PAGES.base_page import BasePage
+
 
 class LoginPage(BasePage):
     def __init__(self, page: Page):
@@ -38,9 +40,8 @@ class LoginPage(BasePage):
     def verify_logged_in(self, username: str):
         self.page.wait_for_load_state("domcontentloaded", timeout=self.config.SHORT_TIMEOUT)
         header_text = self.header_container.text_content()
-        assert f"Logged in as {username}" in header_text, \
-            f"Expected 'Logged in as {username}', got: {header_text}"
-        
+        assert f"Logged in as {username}" in header_text, f"Expected 'Logged in as {username}', got: {header_text}"
+
     def click_logout(self):
         self.click(self.logout_btn)
 

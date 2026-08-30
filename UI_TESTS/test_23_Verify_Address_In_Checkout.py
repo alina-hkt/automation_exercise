@@ -1,10 +1,13 @@
-import pytest
 import time
+
 import allure
+
 from config import Config
 
-def test_verify_address_in_checkout(home_page, account_deleted_page, products_page, cart_page,
-                                     signup_page, register_page, checkout_page):
+
+def test_verify_address_in_checkout(
+    home_page, account_deleted_page, products_page, cart_page, signup_page, register_page, checkout_page
+):
 
     config = Config()
     username = "ALINA_SEARCH"
@@ -31,7 +34,7 @@ def test_verify_address_in_checkout(home_page, account_deleted_page, products_pa
         register_page.fill_password(config.TEST_USER_PASSWORD)
         register_page.set_date_of_birth(day="16", month="9", year="2004")
         register_page.check_newsletter()
-        
+
         first_name = username
         last_name = "TestUser"
         address1 = "123 Test St"
@@ -40,18 +43,18 @@ def test_verify_address_in_checkout(home_page, account_deleted_page, products_pa
         zipcode = "90001"
         mobile = "1234567890"
         full_name = f"{first_name} {last_name}"
-        
+
         register_page.fill_address_details(
-            first_name=first_name, 
-            last_name=last_name, 
+            first_name=first_name,
+            last_name=last_name,
             company="QA Corp",
-            address1=address1, 
-            address2="Apt 1", 
+            address1=address1,
+            address2="Apt 1",
             country="United States",
-            state=state, 
-            city=city, 
-            zipcode=zipcode, 
-            mobile=mobile
+            state=state,
+            city=city,
+            zipcode=zipcode,
+            mobile=mobile,
         )
         register_page.click_create_account()
 
@@ -79,14 +82,16 @@ def test_verify_address_in_checkout(home_page, account_deleted_page, products_pa
     with allure.step("11. Click Proceed To Checkout."):
         cart_page.click_proceed_to_checkout()
 
-    with allure.step("12-13. Verify that the delivery address is same address filled at the time registration of account. Verify that the billing address is same address filled at the time registration of account."):
+    with allure.step(
+        "12-13. Verify that the delivery address is same address filled at the time registration of account. Verify that the billing address is same address filled at the time registration of account."
+    ):
         checkout_page.verify_address_matches(
             expected_name=full_name,
             expected_address=address1,
             expected_city=city,
             expected_state=state,
             expected_zip=zipcode,
-            expected_mobile=mobile
+            expected_mobile=mobile,
         )
 
     with allure.step("14-15. Click 'Delete Account' button. Verify 'ACCOUNT DELETED!' and click 'Continue' button."):

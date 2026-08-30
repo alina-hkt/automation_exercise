@@ -1,6 +1,7 @@
-import pytest
 import allure
+import pytest
 from playwright.sync_api import APIRequestContext
+
 
 @allure.severity(allure.severity_level.CRITICAL)
 @pytest.mark.api
@@ -24,8 +25,7 @@ def test_get_all_products_list(request_context: APIRequestContext):
         required_fields = ["id", "name", "price", "brand", "category"]
         for product in products:
             for field in required_fields:
-                assert field in product, \
-                    f"Field '{field}' is missing in product id={product.get('id')}"
+                assert field in product, f"Field '{field}' is missing in product id={product.get('id')}"
 
     with allure.step("4. Verify Product IDs are Unique."):
         ids = [p["id"] for p in products]

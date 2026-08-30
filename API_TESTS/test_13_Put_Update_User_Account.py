@@ -1,9 +1,12 @@
-import pytest
 import time
-import allure
-from playwright.sync_api import APIRequestContext
-from config import Config
 from urllib.parse import urlencode
+
+import allure
+import pytest
+from playwright.sync_api import APIRequestContext
+
+from config import Config
+
 
 @allure.severity(allure.severity_level.NORMAL)
 @pytest.mark.api
@@ -31,14 +34,14 @@ def test_put_update_user_account(request_context: APIRequestContext):
         "zipcode": "00000",
         "state": "New York",
         "city": "New York",
-        "mobile_number": "0000000000"
+        "mobile_number": "0000000000",
     }
-    
+
     with allure.step("1. Create a test user via POST /api/createAccount to be updated."):
         request_context.post(
             "/api/createAccount",
             headers={"Content-Type": "application/x-www-form-urlencoded"},
-            data=urlencode(create_data)
+            data=urlencode(create_data),
         )
 
     update_data = {
@@ -58,34 +61,30 @@ def test_put_update_user_account(request_context: APIRequestContext):
         "zipcode": "M5V 3A8",
         "state": "Ontario",
         "city": "Toronto",
-        "mobile_number": "1112223333"
+        "mobile_number": "1112223333",
     }
 
     with allure.step("2. Send PUT request to /api/updateAccount with new data."):
         response = request_context.put(
-            ENDPOINT,
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
-            data=urlencode(update_data)
+            ENDPOINT, headers={"Content-Type": "application/x-www-form-urlencoded"}, data=urlencode(update_data)
         )
         data = response.json()
-        
+
     with allure.step("3. Verify HTTP Status Code is 200."):
         assert response.status == 200, f"Expected HTTP 200, but got {response.status}"
-        
+
     with allure.step("4. Verify response code in body is 200."):
-        assert data.get("responseCode") == 200, \
-            f"Expected responseCode 200 in body, but got {data.get('responseCode')}"
-            
+        assert data.get("responseCode") == 200, f"Expected responseCode 200 in body, but got {data.get('responseCode')}"
+
     with allure.step("5. Verify success message 'User updated!' in response body."):
         expected_message = "User updated!"
         actual_message = data.get("message", "")
-        assert actual_message == expected_message, \
-            f"Expected message '{expected_message}', but got '{actual_message}'"
+        assert actual_message == expected_message, f"Expected message '{expected_message}', but got '{actual_message}'"
 
     with allure.step("6. Delete updated account via POST /api/deleteAccount for cleanup."):
         delete_payload = {"email": test_email, "password": config.TEST_USER_PASSWORD}
         request_context.post(
             "/api/deleteAccount",
             headers={"Content-Type": "application/x-www-form-urlencoded"},
-            data=urlencode(delete_payload)
+            data=urlencode(delete_payload),
         )

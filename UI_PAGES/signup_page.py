@@ -1,10 +1,12 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+
 from UI_PAGES.base_page import BasePage
+
 
 class SignupPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
-        
+
         self.name_input = page.get_by_placeholder("Name")
         signup_form = page.locator("form").filter(has_text="Signup")
         self.email_input = signup_form.get_by_placeholder("Email Address")

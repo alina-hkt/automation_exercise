@@ -1,12 +1,14 @@
-import pytest
-import allure
 import random
 
+import allure
+import pytest
+
+
 @pytest.mark.smoke
-def test_place_order_register_while_checkout(home_page, products_page, cart_page,
-                                              checkout_page, signup_page, 
-                                              payment_page, account_deleted_page):
-    
+def test_place_order_register_while_checkout(
+    home_page, products_page, cart_page, checkout_page, signup_page, payment_page, account_deleted_page
+):
+
     unique_email = f"test_user_{random.randint(10000, 99999)}@automation.test"
     user_name = f"TestUser{random.randint(1000, 9999)}"
 
@@ -38,16 +40,24 @@ def test_place_order_register_while_checkout(home_page, products_page, cart_page
 
     with allure.step("9. Fill all details in Signup and create account."):
         signup_page.fill_initial_signup(user_name, unique_email)
-        signup_page.fill_account_details({
-            "password": "SecurePass123!",
-            "day": "15", "month": "June", "year": "1995",
-            "first_name": "John", "last_name": "Doe",
-            "company": "AutoTest Inc",
-            "address1": "123 QA Street", "address2": "Suite 100",
-            "country": "United States", "state": "California",
-            "city": "San Francisco", "zipcode": "94102",
-            "mobile": "4155551234"
-        })
+        signup_page.fill_account_details(
+            {
+                "password": "SecurePass123!",
+                "day": "15",
+                "month": "June",
+                "year": "1995",
+                "first_name": "John",
+                "last_name": "Doe",
+                "company": "AutoTest Inc",
+                "address1": "123 QA Street",
+                "address2": "Suite 100",
+                "country": "United States",
+                "state": "California",
+                "city": "San Francisco",
+                "zipcode": "94102",
+                "mobile": "4155551234",
+            }
+        )
         signup_page.click_create_account()
 
     with allure.step("10. Verify 'ACCOUNT CREATED!' and click 'Continue' button."):

@@ -1,9 +1,12 @@
-import pytest
 import time
-import allure
-from playwright.sync_api import APIRequestContext
-from config import Config
 from urllib.parse import urlencode
+
+import allure
+import pytest
+from playwright.sync_api import APIRequestContext
+
+from config import Config
+
 
 @allure.severity(allure.severity_level.NORMAL)
 @pytest.mark.regression
@@ -33,14 +36,12 @@ def test_post_create_user_account_via_api_and_cleanup(
         "zipcode": "10001",
         "state": "New York",
         "city": "New York",
-        "mobile_number": "5551234567"
+        "mobile_number": "5551234567",
     }
 
     with allure.step("1. Send POST request to /api/createAccount with registration data."):
         response = request_context.post(
-            ENDPOINT,
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
-            data=urlencode(user_data)
+            ENDPOINT, headers={"Content-Type": "application/x-www-form-urlencoded"}, data=urlencode(user_data)
         )
         data = response.json()
 
@@ -48,14 +49,12 @@ def test_post_create_user_account_via_api_and_cleanup(
         assert response.status == 200, f"Expected HTTP 200, but got {response.status}"
 
     with allure.step("3. Verify response code in body is 201."):
-        assert data.get("responseCode") == 201, \
-            f"Expected responseCode 201 in body, but got {data.get('responseCode')}"
+        assert data.get("responseCode") == 201, f"Expected responseCode 201 in body, but got {data.get('responseCode')}"
 
     with allure.step("4. Verify success message in response body."):
         expected_message = "User created!"
         actual_message = data.get("message", "")
-        assert actual_message == expected_message, \
-            f"Expected message '{expected_message}', but got '{actual_message}'"
+        assert actual_message == expected_message, f"Expected message '{expected_message}', but got '{actual_message}'"
 
     with allure.step("5. Login via UI to establish session for cleanup."):
         home_page.open_home()

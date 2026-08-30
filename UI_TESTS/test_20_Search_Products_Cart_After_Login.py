@@ -1,9 +1,13 @@
-import pytest
 import time
+
 import allure
+
 from config import Config
 
-def test_Search_Products_Cart_After_Login(home_page, account_deleted_page, login_page, products_page, cart_page, register_page):
+
+def test_Search_Products_Cart_After_Login(
+    home_page, account_deleted_page, login_page, products_page, cart_page, register_page
+):
     config = Config()
     username = "ALINA_SEARCH"
     dynamic_email = f"alina_search_{int(time.time())}@test.com"
@@ -21,11 +25,18 @@ def test_Search_Products_Cart_After_Login(home_page, account_deleted_page, login
     register_page.set_date_of_birth(day="16", month="9", year="2004")
     register_page.check_newsletter()
     register_page.fill_address_details(
-                first_name=username, last_name="TestUser", company="QA Corp",
-                address1="123 Test St", address2="Apt 1", country="United States",
-                state="California", city="Los Angeles", zipcode="90001", mobile="1234567890"
-            )
-    
+        first_name=username,
+        last_name="TestUser",
+        company="QA Corp",
+        address1="123 Test St",
+        address2="Apt 1",
+        country="United States",
+        state="California",
+        city="Los Angeles",
+        zipcode="90001",
+        mobile="1234567890",
+    )
+
     register_page.click_create_account()
     register_page.verify_account_created()
     register_page.click_continue()
@@ -69,7 +80,7 @@ def test_Search_Products_Cart_After_Login(home_page, account_deleted_page, login
         login_page.fill_email(dynamic_email)
         login_page.fill_password(config.TEST_USER_PASSWORD)
         login_page.click_login()
-   
+
     with allure.step("11. Again, go to Cart page."):
         home_page.click_cart()
 

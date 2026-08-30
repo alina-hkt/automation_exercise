@@ -1,10 +1,12 @@
 from playwright.sync_api import Page
+
 from UI_PAGES.base_page import BasePage
+
 
 class ProductDetailPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
-        
+
         self.product_name = page.get_by_role("heading", name="Blue Top")
         self.category = page.get_by_text("Category: Women > Tops")
         self.price = page.get_by_text("Rs.")

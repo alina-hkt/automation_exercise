@@ -1,10 +1,13 @@
-import pytest
 import time
+
 import allure
+
 from config import Config
 
-def test_download_invoice_after_purchase(home_page, account_deleted_page, products_page, cart_page,
-                                     signup_page, payment_page, register_page, checkout_page):
+
+def test_download_invoice_after_purchase(
+    home_page, account_deleted_page, products_page, cart_page, signup_page, payment_page, register_page, checkout_page
+):
 
     config = Config()
     username = "ALINA_SEARCH"
@@ -48,7 +51,7 @@ def test_download_invoice_after_purchase(home_page, account_deleted_page, produc
         register_page.fill_password(config.TEST_USER_PASSWORD)
         register_page.set_date_of_birth(day="16", month="9", year="2004")
         register_page.check_newsletter()
-        
+
         first_name = username
         last_name = "TestUser"
         address1 = "123 Test St"
@@ -57,18 +60,18 @@ def test_download_invoice_after_purchase(home_page, account_deleted_page, produc
         zipcode = "90001"
         mobile = "1234567890"
         full_name = f"{first_name} {last_name}"
-        
+
         register_page.fill_address_details(
-            first_name=first_name, 
-            last_name=last_name, 
+            first_name=first_name,
+            last_name=last_name,
             company="QA Corp",
-            address1=address1, 
-            address2="Apt 1", 
+            address1=address1,
+            address2="Apt 1",
             country="United States",
-            state=state, 
-            city=city, 
-            zipcode=zipcode, 
-            mobile=mobile
+            state=state,
+            city=city,
+            zipcode=zipcode,
+            mobile=mobile,
         )
         register_page.click_create_account()
 
@@ -92,33 +95,27 @@ def test_download_invoice_after_purchase(home_page, account_deleted_page, produc
             expected_city=city,
             expected_state=state,
             expected_zip=zipcode,
-            expected_mobile=mobile
+            expected_mobile=mobile,
         )
 
     with allure.step("15. Enter description in comment text area and click 'Place Order'."):
         checkout_page.fill_comment_and_place_order(comment="Test order comment")
 
     with allure.step("16. Enter payment details: Name on Card, Card Number, CVC, Expiration date."):
-        payment_page.fill_payment_details(
-            name=full_name,
-            card="4111111111111111",
-            cvc="123",
-            month="12",
-            year="2030"
-        )
-            
+        payment_page.fill_payment_details(name=full_name, card="4111111111111111", cvc="123", month="12", year="2030")
+
     with allure.step("17. Click 'Pay and Confirm Order' button."):
         payment_page.click_pay_and_confirm()
 
     with allure.step("18. Verify success message 'Your order has been placed successfully!'."):
         checkout_page.verify_order_placed_successfully()
-                    
+
     with allure.step("19. Click 'Download Invoice' button and verify invoice is downloaded successfully."):
-        checkout_page.download_invoice()   
+        checkout_page.download_invoice()
 
     with allure.step("20. Click 'Continue' button."):
         checkout_page.click_continue_after_order()
-                            
+
     with allure.step("21. Click 'Delete Account' button."):
         home_page.click_delete_account()
 

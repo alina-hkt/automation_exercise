@@ -1,5 +1,7 @@
 from playwright.sync_api import Page
+
 from UI_PAGES.base_page import BasePage
+
 
 class ProductDetailsPage(BasePage):
     def __init__(self, page: Page):
@@ -12,9 +14,7 @@ class ProductDetailsPage(BasePage):
         self.email_input = page.locator("#email")
         self.review_textarea = page.locator("#review")
         self.submit_btn = page.locator("#button-review")
-        self.success_message = page.locator("#review-section").get_by_text(
-            "Thank you for your review."
-        )
+        self.success_message = page.locator("#review-section").get_by_text("Thank you for your review.")
 
     def verify_write_review_visible(self):
         self.write_review_heading.scroll_into_view_if_needed()

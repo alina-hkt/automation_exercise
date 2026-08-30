@@ -1,9 +1,10 @@
-import pytest
 import allure
+
 from config import Config
 
+
 def test_scroll_up_and_down(home_page):
-    config = Config()
+    Config()
 
     with allure.step("1. Launch browser."):
         pass
@@ -23,5 +24,7 @@ def test_scroll_up_and_down(home_page):
     with allure.step("6. Click on arrow at bottom right side to move upward."):
         home_page.click_scroll_up_arrow()
 
-    with allure.step("7. Verify that page is scrolled up and 'Full-Fledged practice website for Automation Engineers' text is visible on screen."):
+    with allure.step(
+        "7. Verify that page is scrolled up and 'Full-Fledged practice website for Automation Engineers' text is visible on screen."
+    ):
         home_page.verify_scrolled_to_top()

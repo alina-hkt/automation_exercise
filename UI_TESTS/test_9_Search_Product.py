@@ -1,8 +1,8 @@
-import pytest
 import allure
 
+
 def test_search_product(home_page, products_page):
-    
+
     with allure.step("1. Launch browser."):
         pass
 
@@ -23,6 +23,6 @@ def test_search_product(home_page, products_page):
 
     with allure.step("7. Verify 'SEARCHED PRODUCTS' is visible."):
         products_page.verify_search_results_visible()
-        
+
     with allure.step("8. Verify all the products related to search are visible."):
         pass

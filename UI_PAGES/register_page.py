@@ -1,10 +1,12 @@
 from playwright.sync_api import Page
+
 from UI_PAGES.base_page import BasePage
+
 
 class RegisterPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
-        
+
         self.name_input = page.get_by_placeholder("Name")
         self.email_input = page.locator("form").filter(has_text="Signup").get_by_placeholder("Email Address")
         self.signup_btn = page.get_by_role("button", name="Signup")
@@ -59,9 +61,19 @@ class RegisterPage(BasePage):
     def check_newsletter(self):
         self.click(self.newsletter_checkbox)
 
-    def fill_address_details(self, first_name: str, last_name: str, company: str, 
-                             address1: str, address2: str, country: str, 
-                             state: str, city: str, zipcode: str, mobile: str):
+    def fill_address_details(
+        self,
+        first_name: str,
+        last_name: str,
+        company: str,
+        address1: str,
+        address2: str,
+        country: str,
+        state: str,
+        city: str,
+        zipcode: str,
+        mobile: str,
+    ):
         self.fill(self.first_name_input, first_name)
         self.fill(self.last_name_input, last_name)
         self.fill(self.company_input, company)

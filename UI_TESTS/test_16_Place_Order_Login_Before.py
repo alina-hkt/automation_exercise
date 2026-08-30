@@ -1,15 +1,17 @@
-import pytest
-import allure
-from config import Config
 import time
 
-def test_place_order_login_before_checkout(home_page,  register_page, login_page, products_page,
-                                            cart_page, checkout_page, 
-                                            payment_page, account_deleted_page): 
+import allure
+
+from config import Config
+
+
+def test_place_order_login_before_checkout(
+    home_page, register_page, login_page, products_page, cart_page, checkout_page, payment_page, account_deleted_page
+):
     config = Config()
     username = "ALINA"
     dynamic_email = f"alina_{int(time.time())}@test.com"
-        
+
     home_page.open_home()
     home_page.verify_logo_visible()
     home_page.click_login_signup()
@@ -22,17 +24,24 @@ def test_place_order_login_before_checkout(home_page,  register_page, login_page
     register_page.set_date_of_birth(day="16", month="9", year="2004")
     register_page.check_newsletter()
     register_page.fill_address_details(
-                first_name=username, last_name="TestUser", company="QA Corp",
-                address1="123 Test St", address2="Apt 1", country="United States",
-                state="California", city="Los Angeles", zipcode="90001", mobile="1234567890"
-            )
+        first_name=username,
+        last_name="TestUser",
+        company="QA Corp",
+        address1="123 Test St",
+        address2="Apt 1",
+        country="United States",
+        state="California",
+        city="Los Angeles",
+        zipcode="90001",
+        mobile="1234567890",
+    )
     register_page.click_create_account()
     register_page.verify_account_created()
     register_page.click_continue()
     home_page.verify_logged_in(username)
     login_page.click_logout()
     login_page.verify_returned_to_login_page()
-    
+
     with allure.step("1-3. Launch browser. Navigate to url. Verify home page visible."):
         home_page.open_home()
         home_page.verify_logo_visible()
@@ -46,7 +55,7 @@ def test_place_order_login_before_checkout(home_page,  register_page, login_page
         login_page.click_login()
 
     with allure.step("6. Verify 'Logged in as username' at top."):
-        home_page.verify_logged_in(username) 
+        home_page.verify_logged_in(username)
 
     with allure.step("7. Add products to cart."):
         home_page.click_products()

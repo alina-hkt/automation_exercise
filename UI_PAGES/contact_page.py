@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+
 from UI_PAGES.base_page import BasePage
 
 
@@ -31,7 +32,7 @@ class ContactPage(BasePage):
 
         expect(self.upload_file_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.upload_file_input.set_input_files(file_path)
-        
+
         self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
 
     def click_submit_and_handle_alert(self):
@@ -41,10 +42,9 @@ class ContactPage(BasePage):
 
     def verify_success_message(self):
         expect(self.success_message).to_have_count(1, timeout=self.config.SHORT_TIMEOUT)
-        
+
         expect(self.success_message).to_contain_text(
-            "Success! Your details have been submitted successfully.", 
-            timeout=self.config.SHORT_TIMEOUT
+            "Success! Your details have been submitted successfully.", timeout=self.config.SHORT_TIMEOUT
         )
 
     def click_home(self):

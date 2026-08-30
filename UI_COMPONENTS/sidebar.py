@@ -1,5 +1,7 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+
 from UI_PAGES.base_page import BasePage
+
 
 class SidebarComponent(BasePage):
     def __init__(self, page: Page):

@@ -1,5 +1,5 @@
-import pytest
 import allure
+
 
 def test_add_to_cart_from_recommended(home_page, cart_page):
     with allure.step("1-2. Launch browser. Navigate to url 'http://automationexercise.com'."):
@@ -18,5 +18,7 @@ def test_add_to_cart_from_recommended(home_page, cart_page):
         print(f"Adding product: {product_name}")
         home_page.add_recommended_product_to_cart(index=0)
 
-    with allure.step("6-7. Click on 'View Cart' button (if applicable) and Verify that product is displayed in cart page."):
+    with allure.step(
+        "6-7. Click on 'View Cart' button (if applicable) and Verify that product is displayed in cart page."
+    ):
         cart_page.verify_recommended_product_in_cart(product_name)

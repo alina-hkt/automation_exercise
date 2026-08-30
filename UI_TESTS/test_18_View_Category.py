@@ -1,5 +1,5 @@
-import pytest
 import allure
+
 
 def test_view_category_products(home_page, sidebar):
     with allure.step("1-2. Launch browser and navigate to url."):

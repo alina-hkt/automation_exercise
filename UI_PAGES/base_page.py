@@ -1,5 +1,7 @@
 from playwright.sync_api import Page, expect
+
 from config import Config
+
 
 class BasePage:
     def __init__(self, page: Page):
@@ -13,7 +15,9 @@ class BasePage:
     def get_title(self) -> str:
         return self.page.title()
 
-    def wait_for_visible(self, locator, timeout: int = None): #время ожидания можно передать при вызове, а если не передали — возьмем стандартное из конфига
+    def wait_for_visible(
+        self, locator, timeout: int = None
+    ):  # время ожидания можно передать при вызове, а если не передали — возьмем стандартное из конфига
         timeout = timeout or self.config.PAGE_LOAD_TIMEOUT
         expect(locator).to_be_visible(timeout=timeout)
 

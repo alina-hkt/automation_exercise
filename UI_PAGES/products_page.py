@@ -1,18 +1,19 @@
 from playwright.sync_api import Page
+
 from UI_PAGES.base_page import BasePage
 from UI_PAGES.product_detail_page import ProductDetailPage
+
 
 class ProductsPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
-        
+
         self.products_heading = page.locator("h2").filter(has_text="All Products")
         self.product_items = page.locator(".product-image-wrapper")
         self.found_products_count = 0
         self.add_to_cart_btn_first = page.locator(".overlay-content > .btn").first
         self.add_to_cart_btn_second = page.locator(
-            "div:nth-child(4) > .product-image-wrapper > .single-products > "
-            ".product-overlay > .overlay-content > .btn"
+            "div:nth-child(4) > .product-image-wrapper > .single-products > .product-overlay > .overlay-content > .btn"
         )
         self.cart_modal = page.locator("#cartModal")
         self.continue_shopping_btn = page.locator("#cartModal").get_by_text("Continue Shopping")
@@ -35,7 +36,7 @@ class ProductsPage(BasePage):
     def add_all_searched_products_to_cart(self):
         if self.found_products_count == 0:
             raise AssertionError("No products found to add to cart.")
-        
+
         for index in range(self.found_products_count):
             product_wrapper = self.search_results.nth(index)
             add_btn = product_wrapper.locator(".overlay-content > .btn")
@@ -50,7 +51,7 @@ class ProductsPage(BasePage):
     def verify_all_searched_products_are_visible(self):
         if self.found_products_count == 0:
             raise AssertionError("Product list is empty, cannot verify visibility.")
-        
+
         for index in range(self.found_products_count):
             product_wrapper = self.search_results.nth(index)
             img_locator = product_wrapper.locator("img")
@@ -63,8 +64,8 @@ class ProductsPage(BasePage):
         card_locator.scroll_into_view_if_needed()
         box = card_locator.bounding_box()
         if box:
-            center_x = box['x'] + box['width'] / 2
-            center_y = box['y'] + box['height'] / 2
+            center_x = box["x"] + box["width"] / 2
+            center_y = box["y"] + box["height"] / 2
             self.page.mouse.move(center_x, center_y)
         btn_locator.evaluate("el => el.click()")
         self.wait_for_visible(self.cart_modal)

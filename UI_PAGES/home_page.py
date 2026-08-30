@@ -1,5 +1,8 @@
 from playwright.sync_api import Page, expect
+from playwright.sync_api import TimeoutError as PlaywrightTimeout
+
 from UI_PAGES.base_page import BasePage
+
 
 class HomePage(BasePage):
     def __init__(self, page: Page):
@@ -90,7 +93,7 @@ class HomePage(BasePage):
     def scroll_to_recommended_items(self):
         recommended_container = self.page.locator(".recommended_items")
         recommended_container.scroll_into_view_if_needed()
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT) 
+        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
 
     def verify_recommended_items_visible(self):
         self.wait_for_visible(self.recommended_heading)
@@ -106,7 +109,7 @@ class HomePage(BasePage):
         first_item = self.page.locator(".recommended_items .item.active .productinfo p").first
         try:
             first_item.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
-        except:
+        except PlaywrightTimeout:
             pass
 
     def add_recommended_product_to_cart(self, index: int = 0):
@@ -128,7 +131,7 @@ class HomePage(BasePage):
         name_locator = self.page.locator(".recommended_items .productinfo p").nth(index)
         try:
             name_locator.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
-        except:
+        except PlaywrightTimeout:
             pass
         text = name_locator.text_content()
         return text.strip() if text else "Unknown Product"
