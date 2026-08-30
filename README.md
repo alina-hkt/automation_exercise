@@ -13,3 +13,35 @@ To check code quality:
 ```powershell
 ruff check .
 
+## Tech Stack
+
+- 🐍 **Language:** Python 3.12
+- 🧪 **Test Framework:** Pytest
+- 🌐 **Browser & API Automation:** Playwright
+- 📊 **Reporting:** Allure Report
+- ✨ **Linting & Formatting:** Ruff
+- 🐳 **Containerization:** Docker
+- 🔄 **CI/CD:** GitHub Actions
+
+## How to Run
+
+### Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
+
+### Steps
+
+# 1. Clone the repository.
+```powershell
+git clone https://github.com/alina-hkt/automation_exercise.git
+
+# 2. Navigate to the project folder.
+```powershell
+cd automation_exercise
+
+# 3. Build the Docker image.
+```powershell
+docker build -t allure-tests .
+
+# 4. Run tests.
+```powershell
+.\run-docker.ps1
