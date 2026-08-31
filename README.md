@@ -27,26 +27,36 @@ ruff check .
 ## How to Run
 
 ### Prerequisites
+
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
 
 ### Steps
 
-### 1. Clone the repository.
+1. Clone the repository.
 ```powershell
 git clone https://github.com/alina-hkt/automation_exercise.git
 ```
 
-### 2. Navigate to the project folder.
+2. Navigate to the project folder.
 ```powershell
 cd automation_exercise
 ```
+3. Create a .env file in the root directory with valid credentials of an existing user.
+```powershell
+@"
+BASE_URL=http://automationexercise.com
+TEST_USER_EMAIL=test@example.com
+TEST_USER_PASSWORD=TestPassword123
+NAME=TestUser
+"@ | Out-File -FilePath .env -Encoding utf8 -NoNewline
+```
 
-### 3. Build the Docker image.
+4. Build the Docker image.
 ```powershell
 docker build -t allure-tests .
 ```
 
-### 4. Run tests.
+5. Run tests.
 ```powershell
 .\run-docker.ps1
 ```
