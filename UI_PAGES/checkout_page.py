@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from UI_PAGES.base_page import BasePage
 
@@ -19,21 +19,20 @@ class CheckoutPage(BasePage):
         self.continue_btn = page.get_by_role("link", name="Continue")
 
     def click_proceed_to_checkout(self):
-        self.wait_for_visible(self.proceed_to_checkout_btn)
+        expect(self.proceed_to_checkout_btn).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         self.proceed_to_checkout_btn.click()
 
     def click_register_login(self):
-        self.wait_for_visible(self.register_login_btn)
-        self.click(self.register_login_btn)
+        expect(self.register_login_btn).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        self.register_login_btn.click()
 
     def verify_addresses_and_review(self):
-        self.wait_for_visible(self.billing_address)
-        self.wait_for_visible(self.delivery_address)
-        self.wait_for_visible(self.order_review)
+        expect(self.billing_address).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.delivery_address).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.order_review).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def fill_comment_and_place_order(self, comment: str):
         self.comment_textarea.scroll_into_view_if_needed()
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
         self.fill(self.comment_textarea, comment)
 
         self.page.evaluate("""
@@ -41,7 +40,6 @@ class CheckoutPage(BasePage):
                 .find(el => el.innerText.trim() === 'Place Order');
             if (btn) btn.scrollIntoView({block: 'center', inline: 'center'});
         """)
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
 
         self.place_order_btn.evaluate("el => el.click()")
 
@@ -77,7 +75,7 @@ class CheckoutPage(BasePage):
 
     def verify_order_placed_successfully(self):
         self.page.wait_for_url("**/payment_done/**", timeout=self.config.SHORT_TIMEOUT)
-        self.wait_for_visible(self.download_invoice_btn, timeout=self.config.SHORT_TIMEOUT)
+        expect(self.download_invoice_btn).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def download_invoice(self):
         with self.page.expect_download(timeout=self.config.PAGE_LOAD_TIMEOUT) as download_info:

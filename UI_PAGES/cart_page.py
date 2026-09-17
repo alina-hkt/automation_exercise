@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from UI_PAGES.base_page import BasePage
 
@@ -19,49 +19,48 @@ class CartPage(BasePage):
 
     def verify_cart_loaded(self):
         self.page.wait_for_url("**/view_cart", timeout=self.config.SHORT_TIMEOUT)
-        self.wait_for_visible(self.cart_heading)
+        expect(self.cart_heading).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def verify_products_in_cart(self):
-        self.wait_for_visible(self.first_product_name)
-        self.wait_for_visible(self.second_product_name)
+        expect(self.first_product_name).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.second_product_name).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def verify_prices_and_quantity(self):
-        self.wait_for_visible(self.first_product_price)
-        self.wait_for_visible(self.second_product_price)
+        expect(self.first_product_price).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.second_product_price).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         assert "Rs." in self.first_product_price.text_content()
         assert "Rs." in self.second_product_price.text_content()
 
     def verify_product_quantity(self, expected_qty: str):
         qty_locator = self.page.get_by_role("button", name=expected_qty)
-        self.wait_for_visible(qty_locator)
+        expect(qty_locator).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         actual_text = qty_locator.text_content()
         assert actual_text == expected_qty, f"Expected qty '{expected_qty}', got '{actual_text}'"
 
     def click_delete_first_product(self):
-        self.wait_for_visible(self.delete_btn_first)
+        expect(self.delete_btn_first).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         self.delete_btn_first.click()
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
 
     def verify_cart_is_empty(self):
-        self.wait_for_visible(self.empty_cart_message)
+        expect(self.empty_cart_message).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def verify_searched_products_in_cart(self):
-        self.wait_for_visible(self.cart_heading)
+        expect(self.cart_heading).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         top_items = self.page.locator("table tbody tr").filter(has_text="Top")
         count = top_items.count()
         assert count > 0, f"Expected to find products with 'Top' in the cart, but found: {count}"
-        top_items.first.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
+        expect(top_items.first).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def verify_recommended_product_in_cart(self, product_name: str):
         self.verify_cart_loaded()
         product_row = self.page.locator("table tbody tr").filter(has_text=product_name)
         try:
-            product_row.first.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
+            expect(product_row.first).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         except Exception:
             self.page.screenshot(path="debug_cart_not_found.png")
             raise AssertionError(f"Product '{product_name}' not found in cart!")
         assert product_row.count() >= 1, f"Expected at least 1 item '{product_name}', but found {product_row.count()}"
 
     def click_proceed_to_checkout(self):
-        self.wait_for_visible(self.proceed_to_checkout_btn)
-        self.click(self.proceed_to_checkout_btn)
+        expect(self.proceed_to_checkout_btn).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        self.proceed_to_checkout_btn.click()

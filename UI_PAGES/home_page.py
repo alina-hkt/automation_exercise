@@ -93,7 +93,7 @@ class HomePage(BasePage):
     def scroll_to_recommended_items(self):
         recommended_container = self.page.locator(".recommended_items")
         recommended_container.scroll_into_view_if_needed()
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+        expect(self.recommended_heading).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def verify_recommended_items_visible(self):
         self.wait_for_visible(self.recommended_heading)
@@ -120,10 +120,9 @@ class HomePage(BasePage):
         assert index < total, f"Index {index} out of range"
         btn = add_btns.nth(index)
         btn.scroll_into_view_if_needed()
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
         btn.click(force=True)
         view_cart_link = self.page.locator("#cartModal a[href='/view_cart']")
-        view_cart_link.wait_for(state="visible", timeout=self.config.SHORT_TIMEOUT)
+        expect(view_cart_link).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         view_cart_link.click()
         self.page.wait_for_url("**/view_cart", timeout=self.config.SHORT_TIMEOUT)
 
@@ -138,7 +137,7 @@ class HomePage(BasePage):
 
     def scroll_to_bottom(self):
         self.page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+        expect(self.subscription_section).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def verify_subscription_visible(self):
         self.wait_for_visible(self.subscription_section)
@@ -146,7 +145,7 @@ class HomePage(BasePage):
     def click_scroll_up_arrow(self):
         self.wait_for_visible(self.scroll_up_arrow)
         self.click(self.scroll_up_arrow)
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+        expect(self.hero_text).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def verify_scrolled_to_top(self):
         self.wait_for_visible(self.hero_text)
@@ -155,4 +154,4 @@ class HomePage(BasePage):
 
     def scroll_to_top(self):
         self.page.evaluate("window.scrollTo(0, 0)")
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
+        expect(self.hero_text).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
