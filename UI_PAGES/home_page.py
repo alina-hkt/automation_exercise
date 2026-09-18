@@ -140,15 +140,17 @@ class HomePage(BasePage):
         expect(self.subscription_section).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def verify_subscription_visible(self):
-        self.wait_for_visible(self.subscription_section)
+        expect(self.subscription_section).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def click_scroll_up_arrow(self):
         self.wait_for_visible(self.scroll_up_arrow)
         self.click(self.scroll_up_arrow)
-        expect(self.hero_text).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
+        self.page.wait_for_function(
+            "window.scrollY < 100", 
+            timeout=self.config.SHORT_TIMEOUT
+        )
 
     def verify_scrolled_to_top(self):
-        self.wait_for_visible(self.hero_text)
         scroll_y = self.page.evaluate("window.scrollY")
         assert scroll_y < 100, f"Page not scrolled to top! scrollY={scroll_y}"
 

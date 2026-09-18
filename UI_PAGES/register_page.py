@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page,  expect
 
 from UI_PAGES.base_page import BasePage
 
@@ -42,10 +42,10 @@ class RegisterPage(BasePage):
         self.click(self.signup_btn)
 
     def verify_error_visible(self):
-        self.wait_for_visible(self.error_message)
+        expect(self.error_message).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def verify_new_user_signup_visible(self):
-        self.wait_for_visible(self.new_user_signup_heading)
+        expect(self.new_user_signup_heading).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def select_title_mrs(self):
         self.click(self.mrs_radio)
@@ -89,7 +89,7 @@ class RegisterPage(BasePage):
         self.click(self.create_account_btn)
 
     def verify_account_created(self):
-        self.wait_for_visible(self.account_created_heading)
+        expect(self.account_created_heading).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def click_continue(self):
         self.click(self.continue_btn)

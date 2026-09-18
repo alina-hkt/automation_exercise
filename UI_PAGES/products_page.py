@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from UI_PAGES.base_page import BasePage
 from UI_PAGES.product_detail_page import ProductDetailPage
@@ -26,12 +26,12 @@ class ProductsPage(BasePage):
         self.search_results = page.locator(".product-image-wrapper")
 
     def search_product(self, product_name: str):
-        self.wait_for_visible(self.search_input)
+        expect(self.search_input).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         self.fill(self.search_input, product_name)
         self.click(self.search_btn)
 
     def verify_products_list_visible(self):
-        self.wait_for_visible(self.products_heading)
+        expect(self.products_heading).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def add_all_searched_products_to_cart(self):
         if self.found_products_count == 0:
@@ -44,7 +44,7 @@ class ProductsPage(BasePage):
             self.click_continue_shopping()
 
     def verify_search_results_visible(self):
-        self.wait_for_visible(self.searched_products_heading)
+        expect(self.searched_products_heading).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         self.found_products_count = self.search_results.count()
         assert self.found_products_count > 0, f"No products found for search query. Count: {self.found_products_count}"
 
@@ -68,7 +68,7 @@ class ProductsPage(BasePage):
             center_y = box["y"] + box["height"] / 2
             self.page.mouse.move(center_x, center_y)
         btn_locator.evaluate("el => el.click()")
-        self.wait_for_visible(self.cart_modal)
+        expect(self.cart_modal).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def add_first_product_to_cart(self):
         first_card = self.product_items.nth(0)
@@ -79,12 +79,12 @@ class ProductsPage(BasePage):
         self.add_product_to_cart_via_mouse(second_card, self.add_to_cart_btn_second)
 
     def click_continue_shopping(self):
-        self.wait_for_visible(self.continue_shopping_btn)
+        expect(self.continue_shopping_btn).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.continue_shopping_btn.click()
-        self.cart_modal.wait_for(state="hidden", timeout=self.config.SHORT_TIMEOUT)
+        expect(self.cart_modal).to_be_hidden(timeout=self.config.SHORT_TIMEOUT)
 
     def click_view_cart(self):
-        self.wait_for_visible(self.view_cart_btn_modal, timeout=self.config.SHORT_TIMEOUT)
+        expect(self.view_cart_btn_modal).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.view_cart_btn_modal.click()
         self.page.wait_for_url("**/view_cart", timeout=self.config.SHORT_TIMEOUT)
 
@@ -95,6 +95,5 @@ class ProductsPage(BasePage):
         view_product_btns = self.page.locator("a[href*='/product_details/']")
         btn = view_product_btns.nth(index)
         btn.scroll_into_view_if_needed()
-        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
         btn.click()
         self.page.wait_for_url("**/product_details/**", timeout=self.config.SHORT_TIMEOUT)

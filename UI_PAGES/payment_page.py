@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from UI_PAGES.base_page import BasePage
 
@@ -31,9 +31,11 @@ class PaymentPage(BasePage):
         self.fill(self.exp_year, year)
 
     def click_pay_and_confirm(self):
+        expect(self.pay_confirm_btn).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
         self.click(self.pay_confirm_btn)
 
     def verify_order_success_and_continue(self):
-        self.wait_for_visible(self.success_message)
+        expect(self.success_message).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
+        expect(self.continue_btn).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.click(self.continue_btn)
         self.page.wait_for_url("**/", timeout=self.config.SHORT_TIMEOUT)

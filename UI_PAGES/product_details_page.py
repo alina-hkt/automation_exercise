@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from UI_PAGES.base_page import BasePage
 
@@ -18,7 +18,7 @@ class ProductDetailsPage(BasePage):
 
     def verify_write_review_visible(self):
         self.write_review_heading.scroll_into_view_if_needed()
-        self.wait_for_visible(self.write_review_heading)
+        expect(self.write_review_heading).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
 
     def fill_review_form(self, name: str, email: str, review: str):
         self.fill(self.name_input, name)
@@ -29,4 +29,4 @@ class ProductDetailsPage(BasePage):
         self.click(self.submit_btn)
 
     def verify_success_message(self):
-        self.wait_for_visible(self.success_message)
+        expect(self.success_message).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)

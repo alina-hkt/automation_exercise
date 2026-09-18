@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from UI_PAGES.base_page import BasePage
 
@@ -21,7 +21,7 @@ class ProductDetailPage(BasePage):
         self.view_cart_btn = page.locator("#cartModal").get_by_text("View Cart")
 
     def verify_product_detail_opened(self):
-        self.wait_for_visible(self.product_heading)
+        expect(self.product_heading).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def set_quantity(self, quantity: int):
         self.quantity_input.fill(str(quantity))
@@ -31,13 +31,14 @@ class ProductDetailPage(BasePage):
         self.wait_for_visible(self.cart_modal)
 
     def click_view_cart(self):
+        expect(self.view_cart_btn).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.click(self.view_cart_btn)
         self.page.wait_for_url("**/view_cart", timeout=self.config.SHORT_TIMEOUT)
 
     def verify_details_visible(self):
-        self.wait_for_visible(self.product_name)
-        self.wait_for_visible(self.category)
-        self.wait_for_visible(self.price)
-        self.wait_for_visible(self.availability)
-        self.wait_for_visible(self.condition)
-        self.wait_for_visible(self.brand)
+        expect(self.product_name).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
+        expect(self.category).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
+        expect(self.price).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
+        expect(self.availability).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
+        expect(self.condition).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
+        expect(self.brand).to_be_visible(timeout=self.config.SHORT_TIMEOUT)

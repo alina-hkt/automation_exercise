@@ -18,13 +18,22 @@ class ContactPage(BasePage):
         self.get_in_touch_heading = page.locator("h2").filter(has_text="GET IN TOUCH")
 
     def fill_contact_form(self, name: str, email: str, subject: str, message: str, file_path: str):
+        expect(self.name_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.name_input.fill(name)
+
+        expect(self.email_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.email_input.fill(email)
+
+        expect(self.subject_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.subject_input.fill(subject)
+
+        expect(self.message_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.message_input.fill(message)
 
         expect(self.upload_file_input).to_be_visible(timeout=self.config.SHORT_TIMEOUT)
         self.upload_file_input.set_input_files(file_path)
+
+        self.page.wait_for_timeout(timeout=self.config.SHORT_TIMEOUT)
 
     def click_submit_and_handle_alert(self):
         self.page.on("dialog", lambda dialog: dialog.accept())

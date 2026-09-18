@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from UI_PAGES.base_page import BasePage
 
@@ -32,7 +32,6 @@ class SignupPage(BasePage):
         self.continue_btn = page.get_by_role("link", name="Continue")
 
     def fill_initial_signup(self, name: str, email: str):
-        self.wait_for_visible(self.name_input)
         self.fill(self.name_input, name)
         self.fill(self.email_input, email)
         self.click(self.signup_btn)
@@ -59,7 +58,7 @@ class SignupPage(BasePage):
         self.click(self.create_account_btn)
 
     def verify_account_created(self):
-        self.wait_for_visible(self.account_created_heading)
+        expect(self.account_created_heading).to_be_visible(timeout=self.config.PAGE_LOAD_TIMEOUT)
 
     def click_continue_after_creation(self):
         self.click(self.continue_btn)
