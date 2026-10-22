@@ -1,4 +1,4 @@
-name: Playwright Tests with Allure
+name: Playwright Tests with Allure inside Docker
 
 on:
   push:
@@ -13,31 +13,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      # 1. Собираем Docker-образ (используя тот оптимизированный Dockerfile от Microsoft)
+      - name: Build Docker Image
+        run: docker build -t automation-tests .
 
-      - name: Install dependencies
+      # 2. Безопасно запускаем тесты внутри Docker-контейнера
+      # Секреты прокидываются через флаг --env напрямую в память процесса, никаких файлов .env!
+      # Папка allure-results мапится наружу (-v), чтобы GitHub Actions мог забрать результаты для отчета.
+      - name: Run Pytest inside Docker
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Update apt lists
-        run: sudo apt-get update
-
-      - name: Install Playwright Browsers
-        run: playwright install --with-deps chromium
-
-      - name: Create .env from secrets
-        run: |
-          echo "BASE_URL=https://www.automationexercise.com" > .env
-          echo "TEST_USER_EMAIL=${{secrets.TEST_USER_EMAIL}}" >> .env
-          echo "TEST_USER_PASSWORD=${{secrets.TEST_USER_PASSWORD}}" >> .env
-          echo "NAME=${{secrets.NAME}}" >> .env
-          
-      - name: Run Pytest
-        run: pytest UI_TESTS/ API_TESTS/ HYBRID_TEST/ --alluredir=allure-results --clean-alluredir -v
+          docker run \
+            --env BASE_URL="https://automationexercise.com" \
+            --env TEST_USER_EMAIL="${{ secrets.TEST_USER_EMAIL }}" \
+            --env TEST_USER_PASSWORD="${{ secrets.TEST_USER_PASSWORD }}" \
+            --env NAME="${{ secrets.NAME }}" \
+            -v $(pwd)/allure-results:/app/allure-results \
+            automation-tests
         continue-on-error: true
 
       - name: Load Allure history
@@ -51,7 +42,7 @@ jobs:
       - name: Generate Allure Report (Java CLI)
         if: always()
         run: |
-          wget -q https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.29.0/allure-commandline-2.29.0.zip
+          wget -q https://apache.org
           unzip -q allure-commandline-2.29.0.zip -d /tmp/allure
           
           /tmp/allure/allure-2.29.0/bin/allure generate allure-results -o allure-history --clean
