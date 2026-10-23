@@ -5,15 +5,6 @@
 
 Tests for the site [Automation Exercise](http://automationexercise.com)
 
-## Code Quality & Linting
-
-This project uses [Ruff](https://docs.astral.sh/ruff/) for linting and formatting.
-
-To check code quality:
-```powershell
-ruff check .
-```
-
 ## Tech Stack
 
 - 🐍 **Language:** Python 3.12
