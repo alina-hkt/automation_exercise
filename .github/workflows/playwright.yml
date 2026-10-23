@@ -16,6 +16,7 @@ jobs:
 
       - name: Prepare Allure results directory
         run: |
+          rm -rf allure-results
           mkdir -p allure-results
           chmod 777 allure-results
 
