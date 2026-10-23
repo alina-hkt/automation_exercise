@@ -10,11 +10,11 @@ def test_contact_us_form(home_page, contact_page):
     Config()
 
     dynamic_email = f"contact_test_{int(time.time())}@test.com"
-    upload_file_path = os.path.join(os.path.dirname(__file__), "../../data/test_upload.txt")
+    upload_file_path = "/tmp/test_upload.txt"
     if not os.path.exists(upload_file_path):
-        os.makedirs(os.path.dirname(upload_file_path), exist_ok=True)
-        with open(upload_file_path, "w", encoding="utf-8") as f:
-            f.write("Test content for automation upload")
+        with open(upload_file_path, "w") as f:
+            f.write("test content")
+
 
     with allure.step("1. Launch browser."):
         pass
