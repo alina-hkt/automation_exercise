@@ -14,11 +14,13 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/opt/allure-browsers
 
 RUN playwright install chromium && \
     playwright install-deps chromium && \
-    chmod -R 755 /opt/allure-browsers # Даем права на чтение/запуск всем пользователям
+    chmod -R 755 /opt/allure-browsers
 
 RUN useradd -m -u 1001 testuser && \
     mkdir -p /app/allure-results && \
     chown -R testuser:testuser /app
+
+RUN mkdir -p /app/data && chown -R testuser:testuser /app/data
 
 USER testuser
 
