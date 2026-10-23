@@ -10,7 +10,6 @@ from config import Config
 
 @allure.severity(allure.severity_level.NORMAL)
 @pytest.mark.regression
-@pytest.mark.hybrid
 def test_post_create_user_account_via_api_and_cleanup(
     home_page, login_page, account_deleted_page, request_context: APIRequestContext
 ):
@@ -56,15 +55,16 @@ def test_post_create_user_account_via_api_and_cleanup(
         actual_message = data.get("message", "")
         assert actual_message == expected_message, f"Expected message '{expected_message}', but got '{actual_message}'"
 
-    with allure.step("5. Login via UI to establish session for cleanup."):
-        home_page.open_home()
-        home_page.click_login_signup()
-        login_page.fill_email(dynamic_email)
-        login_page.fill_password(config.TEST_USER_PASSWORD)
-        login_page.click_login()
-        home_page.verify_logged_in(username)
+    with allure.step("5. Delete account via API /api/deleteAccount for cleanup."):
+        delete_payload = {"email": dynamic_email, "password": config.TEST_USER_PASSWORD}
+        del_response = request_context.delete(
+            "/api/deleteAccount",
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            data=urlencode(delete_payload)
+        )
+        del_data = del_response.json()
 
-    with allure.step("6. Delete created account via UI for cleanup."):
-        home_page.click_delete_account()
-        account_deleted_page.verify_heading_visible()
-        account_deleted_page.click_continue()
+    with allure.step("6. Verify deletion was successful (HTTP 200 and responseCode 200)."):
+        assert del_response.status == 200, f"Delete failed with status {del_response.status}"
+        assert del_data.get("responseCode") == 200, f"Delete responseCode error: {del_data.get('responseCode')}"
+        assert del_data.get("message") == "Account deleted!", f"Wrong delete message: {del_data.get('message')}"

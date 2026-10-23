@@ -48,4 +48,4 @@ class ContactPage(BasePage):
 
     def click_home(self):
         self.click(self.home_link)
-        self.page.wait_for_url("**/", timeout=self.config.SHORT_TIMEOUT)
+        self.page.wait_for_url("**/", timeout=self.config.PAGE_LOAD_TIMEOUT)

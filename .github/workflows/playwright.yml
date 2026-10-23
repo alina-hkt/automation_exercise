@@ -1,58 +1,67 @@
-name: Playwright Tests with Allure inside Docker
-
+name: Playwright Tests with Allure (Docker)
 on:
   push:
     branches: [ main ]
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 1. Собираем Docker-образ (используя тот оптимизированный Dockerfile от Microsoft)
-      - name: Build Docker Image
-        run: docker build -t automation-tests .
+      - name: Build Docker image
+        run: docker build -t playwright-tests .
 
-      # 2. Безопасно запускаем тесты внутри Docker-контейнера
-      # Секреты прокидываются через флаг --env напрямую в память процесса, никаких файлов .env!
-      # Папка allure-results мапится наружу (-v), чтобы GitHub Actions мог забрать результаты для отчета.
-      - name: Run Pytest inside Docker
+      - name: Prepare Allure results directory
         run: |
-          docker run \
-            --env BASE_URL="https://automationexercise.com" \
-            --env TEST_USER_EMAIL="${{ secrets.TEST_USER_EMAIL }}" \
-            --env TEST_USER_PASSWORD="${{ secrets.TEST_USER_PASSWORD }}" \
-            --env NAME="${{ secrets.NAME }}" \
-            -v $(pwd)/allure-results:/app/allure-results \
-            automation-tests
-        continue-on-error: true
+          mkdir -p allure-results
+          chmod 777 allure-results
+
+      - name: Run tests in container
+        env:
+          BASE_URL: https://www.automationexercise.com
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          NAME: ${{ secrets.NAME }}
+        run: |
+          docker run --rm \
+            -e BASE_URL \
+            -e TEST_USER_EMAIL \
+            -e TEST_USER_PASSWORD \
+            -e NAME \
+            -v ${{ github.workspace }}/allure-results:/app/allure-results \
+            playwright-tests
 
       - name: Load Allure history
-        uses: actions/checkout@v4
         if: always()
         continue-on-error: true
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: gh-pages
+          persist-credentials: false
 
-      - name: Generate Allure Report (Java CLI)
+      - name: Copy Allure history to results
         if: always()
         run: |
-          wget -q https://apache.org
+          if [ -d "gh-pages/history" ]; then
+            cp -r gh-pages/history allure-results/
+          fi
+
+      - name: Generate Allure Report
+        if: always()
+        run: |
+          wget -q https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.29.0/allure-commandline-2.29.0.zip
           unzip -q allure-commandline-2.29.0.zip -d /tmp/allure
-          
           /tmp/allure/allure-2.29.0/bin/allure generate allure-results -o allure-history --clean
-          
           touch allure-history/.nojekyll
-          
-      - name: Deploy report to Github Pages
+
+      - name: Deploy to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
+          publish_branch: gh-pages
+          publish_dir: allure-history
