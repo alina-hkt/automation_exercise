@@ -1,8 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Thu Oct 22 14:19:34 UTC 2026","Thu Oct 22 14:19:36 UTC 2026","1443","UI_TESTS","test_13_Verify_Quantity","","","","test_verify_product_quantity_in_cart[chromium]",""
-"passed","Thu Oct 22 14:19:49 UTC 2026","Thu Oct 22 14:19:59 UTC 2026","10004","UI_TESTS","test_16_Place_Order_Login_Before","","","","test_place_order_login_before_checkout[chromium]",""
-"passed","Thu Oct 22 14:19:30 UTC 2026","Thu Oct 22 14:19:31 UTC 2026","1120","UI_TESTS","test_10_Subscription","","","","test_verify_subscription[chromium]",""
-"passed","Thu Oct 22 14:19:32 UTC 2026","Thu Oct 22 14:19:34 UTC 2026","2027","UI_TESTS","test_12_Add_To_Cart","","","","test_add_products_to_cart[chromium]",""
-"passed","Thu Oct 22 14:19:36 UTC 2026","Thu Oct 22 14:19:42 UTC 2026","6535","UI_TESTS","test_14_Place_Order","","","","test_place_order_register_while_checkout[chromium]",""
-"passed","Thu Oct 22 14:19:31 UTC 2026","Thu Oct 22 14:19:32 UTC 2026","1022","UI_TESTS","test_11_Subscription_Cart","","","","test_verify_subscription_in_cart[chromium]",""
-"passed","Thu Oct 22 14:19:42 UTC 2026","Thu Oct 22 14:19:49 UTC 2026","6926","UI_TESTS","test_15_Place_Order","","","","test_place_order_register_before_checkout[chromium]",""
