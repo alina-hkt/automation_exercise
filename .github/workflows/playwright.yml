@@ -4,6 +4,40 @@ on:
     branches: [ main ]
 
 jobs:
+  sast:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install SAST tools
+        run: pip install bandit semgrep
+
+      - name: Run Bandit
+        run: |
+          bandit -r API_TESTS UI_COMPONENTS UI_PAGES UI_TESTS config.py conftest.py \
+            -f json -o bandit-report.json || true
+
+      - name: Run Semgrep
+        run: |
+          semgrep scan --config auto \
+            API_TESTS UI_COMPONENTS UI_PAGES UI_TESTS config.py conftest.py \
+            --json -o semgrep-report.json || true
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sast-reports
+          path: |
+            bandit-report.json
+            semgrep-report.json
   test:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
