@@ -14,3 +14,4 @@ Tests for the site [Automation Exercise](http://automationexercise.com)
 - ✨ **Linting & Formatting:** Ruff
 - 🐳 **Containerization:** Docker
 - 🔄 **CI/CD:** GitHub Actions
+- 🛡️ **Security/SAST:** Semgrep OSS, Bandit
